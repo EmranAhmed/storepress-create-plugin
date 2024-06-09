@@ -1,0 +1,96 @@
+<?php
+	/**
+	 *  {{title}}
+	 *
+	 * @package    {{namespacePascalCase}}/{{slugPascalCase}}
+	 *
+	 * @wordpress-plugin
+	 * Plugin Name:       {{title}}
+	 * Plugin URI:        https://wordpress.com/plugin/
+	 * Description:       {{description}}
+	 * Version:           {{version}}
+	 * Requires at least: 6.4
+	 * Requires PHP:      7.4
+	 * Author:            {{author}}
+	 * Author URI:        https://storepress.com/
+	 * Text Domain:       {{textdomain}}
+	 * License:           GPL v3 or later
+	 * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
+	 * Domain Path:       /languages
+	 */
+
+	/**
+	 * Bootstrap the plugin.
+	 */
+
+	defined( 'ABSPATH' ) || die( 'Keep Silent' );
+
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Plugin;
+	use Automattic\WooCommerce\Utilities\FeaturesUtil;
+
+if ( ! defined( '{{constantNamespace}}_{{constantSlug}}_PLUGIN_FILE' ) ) {
+	define( '{{constantNamespace}}_{{constantSlug}}_PLUGIN_FILE', __FILE__ );
+}
+
+	// Include the Plugin class.
+if ( ! class_exists( '\{{pascaleNamespace}}\{{slugPascalCase}}\Plugin' ) ) {
+	require_once plugin_dir_path( __FILE__ ) . '/includes/Plugin.php';
+}
+
+	/**
+	 * WooCommerce fallback notice.
+	 *
+	 * @since {{version}}
+	 */
+function {{namespaceSnakeCase}}_{{slugSnakeCase}}_missing_wc_notice() {
+	/* translators: %s WC download URL link. */
+	echo '<div class="error"><p><strong>' . sprintf( esc_html__( '{{title}} requires WooCommerce to be installed and active. You can download %s here.', '{{textdomain}}' ), '<a href="https://woocommerce.com/" target="_blank">WooCommerce</a>' ) . '</strong></p></div>';
+}
+
+	/**
+	 * The main function that returns the Plugin class
+	 *
+	 * @return Plugin
+	 * @since {{version}}
+	 */
+function {{namespaceSnakeCase}}_{{slugSnakeCase}}(): Plugin {
+
+	load_plugin_textdomain( '{{textdomain}}', false, plugin_dir_path( __FILE__ ) . 'languages' );
+	// Include the main class.
+
+	/**
+	 * If plugin dependent with woocommerce.
+	 *
+	 * @example:
+	 * if ( ! class_exists( 'WooCommerce' ) ) {
+	 * add_action( 'admin_notices', '{{namespaceSnakeCase}}_{{slugSnakeCase}}_missing_wc_notice' );
+	 * return;
+	 * }
+	 */
+
+	/**
+	 * If plugin has extended version
+	 *
+	 * @example:
+	 * if ( function_exists( '{{namespaceSnakeCase}}_{{slugSnakeCase}}_pro' ) ) {
+	 * return {{namespaceSnakeCase}}_{{slugSnakeCase}}_pro();
+	 * }
+	 */
+
+	return Plugin::instance();
+}
+
+	// Get the plugin running.
+	add_action( 'plugins_loaded', '{{namespaceSnakeCase}}_{{slugSnakeCase}}' );
+
+	/**
+	 * Declare compatibility with custom order tables for WooCommerce.
+	 *
+	 * @example:
+	 *
+	 * add_action('before_woocommerce_init', function () {
+	 * if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+	 * FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	 * }
+	 * });
+	 */
