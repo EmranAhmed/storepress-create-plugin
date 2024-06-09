@@ -13,7 +13,8 @@
 	"bugs": {
 		"url": "https://github.com/EmranAhmed/storepress-create-plugin/issues"
 	},
-	"homepage": "https://github.com/EmranAhmed/storepress-create-plugin#readme"
+	"homepage": "https://github.com/EmranAhmed/storepress-create-plugin#readme",
+	"publishConfig": {
+		"access": "public"
+	}
 }
-
-
