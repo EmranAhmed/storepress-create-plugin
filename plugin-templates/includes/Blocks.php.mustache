@@ -116,8 +116,8 @@ class Blocks {
 
 		$asset = include_once $asset_file;
 
-		wp_register_style( '{{kebabNamespace}}-{{kebabSlug}}-style', $css_file_url, array(), $asset['version'] );
-		wp_register_script( '{{kebabNamespace}}-{{kebabSlug}}-script', $js_file_url, $asset['dependencies'], $asset['version'], array( 'strategy' => 'defer' ) );
+		wp_register_style( '{{kebabNamespace}}-{{kebabSlug}}-frontend-style', $css_file_url, array(), $asset['version'] );
+		wp_register_script( '{{kebabNamespace}}-{{kebabSlug}}-frontend-script', $js_file_url, $asset['dependencies'], $asset['version'], array( 'strategy' => 'defer' ) );
 	}
 
 	/**
