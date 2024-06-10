@@ -22,7 +22,7 @@ function pascalCase(input){
 
 module.exports = {
 	defaultValues: {
-    folderName: 'src/sample-block',
+    folderName: 'src/static-block',
     namespace: 'storepress',
 		slug: 'plugin',
 		version: '0.1.0',
@@ -31,11 +31,13 @@ module.exports = {
 		author: 'Emran Ahmed',
 		dashicon: 'pets',
 		category: 'storepress',
-		license: 'GPL-3.0+',
-		supports: {
-			html: false,
-		},
-		render: 'file:./render.php',
+    attributes: {
+      x: {
+        type: 'number',
+        default: 100
+      },
+    },
+    license: 'GPL-3.0+',
     customPackageJSON: {"bin": { "package": "./bin/package.js" }},
 		customScripts: {
           "postinstall": "rm -rf ./vendor && rm -rf ./composer.lock && composer install",
@@ -77,8 +79,28 @@ module.exports = {
           "create-woo-extension": "npx @wordpress/create-block@latest --template @woocommerce/create-woo-extension --namespace storepress",
           "create-product-editor-block": "npx @wordpress/create-block@latest --template @woocommerce/create-product-editor-block --namespace storepress"
     },
-    npmDependencies: ['@storepress/components', '@storepress/icons', '@storepress/utils', '@wordpress/dom-ready', '@wordpress/icons', 'classnames'],
-    npmDevDependencies: ['@woocommerce/dependency-extraction-webpack-plugin', '@woocommerce/eslint-plugin', '@wordpress/base-styles', '@wordpress/blocks', '@wordpress/dependency-extraction-webpack-plugin', '@wordpress/i18n', 'eslint-plugin-you-dont-need-lodash-underscore', 'fs-extra', 'webpack-remove-empty-scripts', 'eslint-plugin-prettier'],
+    npmDependencies: [
+      '@wordpress/interactivity',
+      '@storepress/components',
+      '@storepress/icons',
+      '@storepress/utils',
+      '@wordpress/dom-ready',
+      '@wordpress/icons',
+      'classnames'
+    ],
+    npmDevDependencies: [
+      '@wordpress/scripts@27.9.0',
+      '@wordpress/blocks',
+      '@woocommerce/dependency-extraction-webpack-plugin',
+      '@woocommerce/eslint-plugin',
+      '@wordpress/base-styles',
+      '@wordpress/dependency-extraction-webpack-plugin@5.9.0',
+      '@wordpress/i18n',
+      'eslint-plugin-you-dont-need-lodash-underscore',
+      'fs-extra',
+      'webpack-remove-empty-scripts',
+      'eslint-plugin-prettier'
+    ],
     transformer: ( view ) => {
         const todayDate =  new Date().toJSON().slice(0, 10);
         const pascaleNamespace = pascalCase(pascalStorePress(view.namespace))
@@ -99,5 +121,5 @@ module.exports = {
     }
 	},
 	pluginTemplatesPath: join( __dirname, 'plugin-templates' ),
-	blockTemplatesPath: join( __dirname, 'block-templates' ),
+  blockTemplatesPath: join( __dirname, 'block-templates' ),
 };

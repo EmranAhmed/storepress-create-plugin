@@ -5,14 +5,6 @@ import { __ } from '@wordpress/i18n';
 import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 
 /**
-* Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
-* Those files can contain any CSS code that gets applied to the editor.
-*
-* @see https://www.npmjs.com/package/@wordpress/scripts#using-css
-*/
-import './editor.scss';
-
-/**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
@@ -26,20 +18,13 @@ import './editor.scss';
  * @return {Element} Element to render.
  */
 export default function Edit( { attributes, setAttributes, clientId } ) {
-
-	const { x } = attributes
-	const blockProps = useBlockProps({
-		style: {
-			'--css-variable': `100%`,
-		},
-	})
-
-	const innerBlockProps = useInnerBlocksProps()
-
+	const blockProps = useBlockProps();
+	const innerBlockProps = useInnerBlocksProps();
+	
 	return (
-		<div {...blockProps}>
-			<h1>{__('{{title}} – static block edit.js!', '{{textdomain}}')}</h1>
-			<div {...innerBlockProps} />
+		<div { ...blockProps }>
+		    <h1>{ __( '{{title}} – dynamic block edit.js!', '{{textdomain}}' ) }</h1>
+		    <div {...innerBlockProps} />
 		</div>
-	)
+	);
 }

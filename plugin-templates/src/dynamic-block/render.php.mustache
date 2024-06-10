@@ -2,10 +2,10 @@
 	/**
 	 * Block Template File.
 	 *
-     * @package    {{pascaleNamespace}}/{{slugPascalCase}}
-     * @since      {{version}}
-     * @version    {{version}}
-     */
+	 * @package    {{pascaleNamespace}}/{{slugPascalCase}}
+	 * @since      {{version}}
+	 * @version    {{version}}
+	 */
 
 	namespace {{pascaleNamespace}}\{{slugPascalCase}};
 
@@ -47,6 +47,6 @@
 	${{namespace}}_allowed_html = {{namespaceSnakeCase}}_{{slugSnakeCase}}()->get_blocks()->get_kses_allowed_html();
 	?>
 <div <?php echo wp_kses_data( ${{namespace}}_wrapper_attributes ); ?>>
-	<h1>{{title}} - – hello from render.php</h1>
+	<h1>{{title}} - dynamic block render.php!</h1>
 	<div><?php echo wp_kses( $content, ${{namespace}}_allowed_html ); ?></div>
 </div>
