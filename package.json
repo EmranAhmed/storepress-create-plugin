@@ -1,6 +1,6 @@
 {
 	"name": "@storepress/create-plugin",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "A template to be used with `@wordpress/create-block` to create a StorePress extension.",
 	"author": "StorePress",
 	"main": "index.js",
