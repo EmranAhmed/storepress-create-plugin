@@ -39,6 +39,8 @@ module.exports = {
     },
     license: 'GPL-3.0+',
 		customScripts: {
+          "prepare": "husky install",
+          "pre-commit": "lint-staged",
           "postinstall": "rm -rf ./vendor && rm -rf ./composer.lock && composer install",
           "clean": "rm -rf ./vendor && rm -rf ./composer.lock && rm -rf ./build",
           "ready": "npm run clean && npm run build && npm run build:php",
@@ -49,12 +51,12 @@ module.exports = {
           "check-engines": "wp-scripts check-engines",
           "check-licenses": "wp-scripts check-licenses",
           "format": "wp-scripts format ./src",
-          "format:all": "npm run format:js && npm run format:css && npm run format:php",
+          "format:all": "npm run format:php && npm run format:css && npm run format:js",
           "format:js": "wp-scripts format './src/**/*.js'",
           "format:css": "wp-scripts format './src/**/*.scss'",
-          "lint:css": "npm run lint:css-fix && wp-scripts lint-style './src/**/*.scss'",
+          "lint:css": "wp-scripts lint-style './src/**/*.scss'",
           "lint:css-fix": "wp-scripts lint-style './src/**/*.scss' --fix",
-          "lint:js": "npm run lint:js-fix && wp-scripts lint-js './src/**/*.js'",
+          "lint:js": "wp-scripts lint-js './src/**/*.js'",
           "lint:js-fix": "wp-scripts lint-js './src/**/*.js' --fix",
           "lint:md:docs": "wp-scripts lint-md-docs",
           "lint:pkg-json": "wp-scripts lint-pkg-json",
@@ -93,10 +95,30 @@ module.exports = {
       '@wordpress/i18n',
       'eslint-plugin-you-dont-need-lodash-underscore',
       'fs-extra',
+      'husky@8.0.0',
+      'lint-staged@15.2.5',
       'webpack-remove-empty-scripts',
       'eslint-plugin-prettier'
     ],
-    customPackageJSON: {"files": [
+    customPackageJSON: {
+      "lint-staged": {
+        "*.scss": [
+          "npm run lint:css-fix",
+          "npm run lint:css"
+        ],
+        "*.{js,ts,tsx}": [
+          "npm run lint:js-fix",
+          "npm run lint:js"
+        ],
+        "*.php": [
+          "npm run format:php",
+          "npm run lint:php"
+        ],
+        "*.md": [
+          "npm run lint:md:docs"
+        ]
+      },
+      "files": [
         "vendor/**",
         "admin/**",
         "build/**",
@@ -112,7 +134,8 @@ module.exports = {
         "LICENSE.*",
         "README.txt",
         "wpml-config.xml"
-      ]},
+      ]
+    },
     transformer: ( view ) => {
         const todayDate =  new Date().toJSON().slice(0, 10);
         const pascaleNamespace = pascalCase(pascalStorePress(view.namespace))
