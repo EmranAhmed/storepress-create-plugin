@@ -28,7 +28,7 @@ module.exports = {
 		version: '0.1.0',
 		title: 'StorePress Plugin',
 		description: 'A StorePress Plugin',
-		author: 'Emran Ahmed',
+		author: 'EmranAhmed',
 		dashicon: 'pets',
 		category: 'storepress',
     attributes: {
@@ -38,7 +38,6 @@ module.exports = {
       },
     },
     license: 'GPL-3.0+',
-    customPackageJSON: {"bin": { "package": "./bin/package.js" }},
 		customScripts: {
           "postinstall": "rm -rf ./vendor && rm -rf ./composer.lock && composer install",
           "clean": "rm -rf ./vendor && rm -rf ./composer.lock && rm -rf ./build",
@@ -60,14 +59,9 @@ module.exports = {
           "lint:md:docs": "wp-scripts lint-md-docs",
           "lint:pkg-json": "wp-scripts lint-pkg-json",
           "packages-update": "wp-scripts packages-update",
-          "plugin-zip:native": "wp-scripts plugin-zip",
-          "plugin-zip": "npm run zip",
-          "prepackage": "rm -rf ./languages && npm run language && npm run ready",
-          "package": "./bin/package.js",
-          "postpackage": "composer install",
-          "prezip": "rm -rf ./languages && npm run language && npm run ready",
-          "zip": "./bin/package.js --zip",
-          "postzip": "composer install",
+          "preplugin-zip": "rm -rf ./languages && npm run language && npm run ready",
+          "plugin-zip": "wp-scripts plugin-zip",
+          "postplugin-zip": "composer install",
           "test:e2e": "wp-scripts test-e2e",
           "test:unit": "wp-scripts test-unit-js",
           "start": "rm -rf ./build && wp-scripts start --webpack-copy-php --experimental-modules",
@@ -102,6 +96,23 @@ module.exports = {
       'webpack-remove-empty-scripts',
       'eslint-plugin-prettier'
     ],
+    customPackageJSON: {"files": [
+        "vendor/**",
+        "admin/**",
+        "build/**",
+        "assets/**",
+        "images/**",
+        "includes/**",
+        "templates/**",
+        "languages/**",
+        "public/**",
+        "*.php",
+        "block.json",
+        "changelog.*",
+        "LICENSE.*",
+        "README.txt",
+        "wpml-config.xml"
+      ]},
     transformer: ( view ) => {
         const todayDate =  new Date().toJSON().slice(0, 10);
         const pascaleNamespace = pascalCase(pascalStorePress(view.namespace))
