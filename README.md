@@ -14,6 +14,7 @@ Navigate to the newly created folder and get started.
 
 ```
 cd my-extension-name
+git init                 # Init git
 npm install              # Install dependencies
 npm run build            # Build the javascript
 npx @wp-now/wp-now start # Start Wordpress environment
@@ -24,7 +25,7 @@ npx @wp-now/wp-now start # Start Wordpress environment
 For development on this tool itself, you can also install from a local directory.
 
 ```bash
-npx @wordpress/create-block -t ./path/to/storepress/create-plugin my-extension-name
+npx @wordpress/create-block --template ./path/to/storepress/create-plugin my-extension-name
 ```
 
 This is a template to used with [`@wordpress/create-block`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-create-block/) to create a StorePress Plugin starting point.
