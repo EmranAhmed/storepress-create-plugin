@@ -2,29 +2,26 @@
 /**
  * External dependencies
  */
-const {
-	getWordPressSrcDirectory,
-} = require( '@wordpress/scripts/utils/config' );
+const { getWordPressSrcDirectory } = require( '@wordpress/scripts/utils/config' );
 const { fromProjectRoot } = require( '@wordpress/scripts/utils/file' );
-
 const { sep } = require( 'path' );
 
 // jquery --> window.jQuery
 // react-dom --> window.ReactDOM
 const externalScriptsMap = {
-	//'slick-carousel' : ['Slick'],
+	// 'slick-carousel' : ['Slick'],
 };
 
 // @babel/runtime/regenerator --> wp-polyfill
 const scriptHandleMap = {
-	//'slick-carousel' : 'slick-carousel',
+	// 'slick-carousel' : 'slick-carousel',
 };
 
 const externalModulesMap = {
-	// static import.
-	//'@wordpress/interactivity': 'module @wordpress/interactivity',
+	//  static import.
+	// '@wordpress/interactivity': 'module @wordpress/interactivity',
 	// dynamic import.
-	//'@wordpress/interactivity-router': 'import @wordpress/interactivity-router',
+	// '@wordpress/interactivity-router': 'import @wordpress/interactivity-router',
 };
 
 /**
