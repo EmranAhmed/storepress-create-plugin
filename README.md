@@ -28,8 +28,8 @@ For development on this tool itself, you can also install from a local directory
 npx @wordpress/create-block --template ./path/to/storepress/create-plugin my-extension-name
 ```
 
-### Add Features
+### Add Tests
 
-Please check [Base Plugin](https://github.com/EmranAhmed/storepress-base-plugin/) to add `test` and more.
+Please check [Base Plugin](https://github.com/EmranAhmed/storepress-base-plugin/) to add `test` and others.
 
 This is a template to used with [`@wordpress/create-block`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-create-block/) to create a StorePress Plugin starting point.
