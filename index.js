@@ -40,13 +40,13 @@ module.exports = {
     license: 'GPL-3.0+',
 		customScripts: {
       "clean-composer": "rm -rf ./vendor && rm -rf ./composer.lock",
-      "postinstall": "npm run clean-composer && composer install",
+      "postinstall": "git init -q && rm -rf ./.husky && npm run clean-composer && composer install",
 
       "lint:php": "composer run lint",
       "format:php": "composer run format",
 
-      "prebuild": "npm run clean-composer && composer install --no-dev --optimize-autoloader",
-      "build": "rm -rf ./build && wp-scripts build --webpack-copy-php --experimental-modules",
+      "prebuild": "rm -rf ./build && npm run clean-composer && composer install --no-dev --optimize-autoloader",
+      "build": "npm run start -- --no-watch && wp-scripts build --webpack-copy-php --experimental-modules",
 
       "check-engines": "wp-scripts check-engines",
       "check-licenses": "wp-scripts check-licenses",
@@ -71,7 +71,7 @@ module.exports = {
 
       "preplugin-zip" : "rm -rf ./languages && rm -rf ./${npm_package_name}.zip && npm run language && npm run build",
       "plugin-zip" : "wp-scripts plugin-zip",
-      "postplugin-zip" : "composer install",
+      "postplugin-zip" : "npm run clean-composer && composer install",
 
       "prepackage" : "rm -rf ./${npm_package_name} && npm run plugin-zip",
       "package" : "unzip ${npm_package_name}.zip -d ${npm_package_name}",

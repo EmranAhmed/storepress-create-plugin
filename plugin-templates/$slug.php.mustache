@@ -48,12 +48,21 @@ function {{namespaceSnakeCase}}_{{slugSnakeCase}}_missing_wc_notice() {
 }
 
 	/**
+	* The function that always returns the same instance to ensure only one instance exists in the global scope at any time.
+	*
+	* @return Plugin
+	* @since {{version}}
+	*/
+function {{namespaceSnakeCase}}_{{slugSnakeCase}}(): Plugin {
+	return Plugin::instance();
+}
+
+	/**
 	 * The main function that returns the Plugin class
 	 *
-	 * @return Plugin
 	 * @since {{version}}
 	 */
-function {{namespaceSnakeCase}}_{{slugSnakeCase}}(): Plugin {
+function {{namespaceSnakeCase}}_{{slugSnakeCase}}_init() {
 
 	load_plugin_textdomain( '{{textdomain}}', false, plugin_dir_path( __FILE__ ) . 'languages' );
 	// Include the main class.
@@ -73,15 +82,15 @@ function {{namespaceSnakeCase}}_{{slugSnakeCase}}(): Plugin {
 	 *
 	 * @example:
 	 * if ( function_exists( '{{namespaceSnakeCase}}_{{slugSnakeCase}}_pro' ) ) {
-	 * return {{namespaceSnakeCase}}_{{slugSnakeCase}}_pro();
+	 *  {{namespaceSnakeCase}}_{{slugSnakeCase}}_pro();
 	 * }
 	 */
 
-	return Plugin::instance();
+	 {{namespaceSnakeCase}}_{{slugSnakeCase}}();
 }
 
 	// Get the plugin running.
-	add_action( 'plugins_loaded', '{{namespaceSnakeCase}}_{{slugSnakeCase}}' );
+	add_action( 'plugins_loaded', '{{namespaceSnakeCase}}_{{slugSnakeCase}}_init' );
 
 	/**
 	 * Declare compatibility with custom order tables for WooCommerce.
