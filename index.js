@@ -69,13 +69,11 @@ module.exports = {
 
       "packages-update": "wp-scripts packages-update",
 
-      "preplugin-zip" : "rm -rf ./languages && rm -rf ./${npm_package_name}.zip && npm run language && npm run build",
-      "plugin-zip" : "wp-scripts plugin-zip",
-      "postplugin-zip" : "npm run clean-composer && composer install",
+      "prepackage": "rm -rf ./languages && rm -rf ./${npm_package_name}.zip && npm run language && npm run build",
+      "package": "./bin/package.js",
+      "postpackage": "npm run clean-composer && composer install",
 
-      "prepackage" : "rm -rf ./${npm_package_name} && npm run plugin-zip",
-      "package" : "unzip ${npm_package_name}.zip -d ${npm_package_name}",
-      "postpackage" : "rm -rf ./${npm_package_name}.zip",
+      "plugin-zip": "npm run package -- --zip",
 
       "test:e2e": "wp-scripts test-e2e",
       "test:unit": "wp-scripts test-unit-js",
@@ -121,11 +119,11 @@ module.exports = {
     ],
     customPackageJSON: {
       "lint-staged": {
-        "*.scss": [
+        "./src/**/*.scss": [
           "npm run lint:css:fix",
           "npm run lint:css"
         ],
-        "*.{js,ts,tsx}": [
+        "./src/**/*.{js,ts,tsx}": [
           "npm run lint:js:fix",
           "npm run lint:js"
         ],
@@ -133,26 +131,32 @@ module.exports = {
           "npm run format:php",
           "npm run lint:php"
         ],
-        "*.md": [
+        "./*.md": [
           "npm run lint:md:docs"
+        ],
+        "./package.json": [
+          "npm run lint:pkg-json"
         ]
       },
       "files": [
         "vendor/**",
         "admin/**",
+        "public/**",
         "build/**",
         "assets/**",
         "images/**",
         "includes/**",
         "templates/**",
         "languages/**",
-        "public/**",
         "*.php",
         "block.json",
         "changelog.*",
         "README.txt",
         "wpml-config.xml"
-      ]
+      ],
+      "bin": {
+        "package": "./bin/package.js"
+      },
     },
     transformer: ( view ) => {
         const todayDate =  new Date().toJSON().slice(0, 10);

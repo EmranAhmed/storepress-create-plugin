@@ -6,7 +6,7 @@
 	 *
 	 * @wordpress-plugin
 	 * Plugin Name:       {{title}}
-	 * Plugin URI:        https://wordpress.com/plugin/
+	 * Plugin URI:        https://wordpress.org/plugin/{{slug}}
 	 * Description:       {{description}}
 	 * Version:           {{version}}
 	 * Requires at least: 6.4
@@ -44,7 +44,7 @@ if ( ! class_exists( '\{{pascaleNamespace}}\{{slugPascalCase}}\Plugin' ) ) {
 	 */
 function {{namespaceSnakeCase}}_{{slugSnakeCase}}_missing_wc_notice() {
 	/* translators: %s WC download URL link. */
-	echo '<div class="error"><p><strong>' . sprintf( esc_html__( '{{title}} requires WooCommerce to be installed and active. You can download %s here.', '{{textdomain}}' ), '<a href="https://woocommerce.com/" target="_blank">WooCommerce</a>' ) . '</strong></p></div>';
+	echo '<div class="error"><p><strong>' . sprintf( esc_html__( '{{title}} requires WooCommerce to be installed and active. You can download %s here.', '{{textdomain}}' ), '<a href="https://wordpress.org/plugins/woocommerce/" target="_blank">WooCommerce</a>' ) . '</strong></p></div>';
 }
 
 	/**
