@@ -115,6 +115,7 @@ module.exports = {
       'eslint-plugin-you-dont-need-lodash-underscore',
       'husky',
       'lint-staged',
+      'fs-extra',
       'webpack-remove-empty-scripts',
       'eslint-plugin-prettier'
     ],
@@ -130,7 +131,6 @@ module.exports = {
         ],
         "*.php": [
           "npm run format:php",
-          "npm run stan:php",
           "npm run lint:php"
         ],
         "./*.md": [
