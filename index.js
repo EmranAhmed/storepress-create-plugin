@@ -40,9 +40,14 @@ module.exports = {
     license: 'GPL-3.0+',
 		customScripts: {
       "clean-composer": "rm -rf ./vendor && rm -rf ./composer.lock",
-      "postinstall": "git init -q && rm -rf ./.husky && npm run clean-composer && composer install",
+      "postinstall": "git init -q && npm run clean-composer && composer install && husky install",
 
+      "stan:php": "composer run phpstan",
+      "stan:php:report": "composer run phpstan-report",
+
+      "lint:php:report": "composer run lint-report",
       "lint:php": "composer run lint",
+      "lint:php:fix": "composer run format",
       "format:php": "composer run format",
 
       "prebuild": "rm -rf ./build && npm run clean-composer && composer install --no-dev --optimize-autoloader",
@@ -70,7 +75,7 @@ module.exports = {
       "packages-update": "wp-scripts packages-update",
 
       "prepackage": "rm -rf ./languages && rm -rf ./${npm_package_name}.zip && npm run language && npm run build",
-      "package": "./bin/package.js",
+      "package": "./tools/package.js",
       "postpackage": "npm run clean-composer && composer install",
 
       "plugin-zip": "npm run package -- --zip",
@@ -81,17 +86,14 @@ module.exports = {
       "start": "rm -rf ./build && wp-scripts start --webpack-copy-php --experimental-modules",
 
       "language": "npm run language:make-pot && npm run language:make-json",
-      "language:make-pot": "./vendor/bin/wp i18n make-pot . languages/${npm_package_name}.pot --exclude=bin,node_modules,vendor,languages --package-name=\"StorePress Plugin\"",
+      "language:make-pot": "./vendor/bin/wp i18n make-pot . languages/${npm_package_name}.pot --exclude=tools,node_modules,vendor,languages --package-name=\"StorePress Plugin\"",
       "language:make-json": "./vendor/bin/wp i18n make-json languages --no-purge --pretty-print",
 
       "create-dynamic-block": "npx @wordpress/create-block@latest --namespace storepress --variant dynamic --no-plugin",
       "create-static-block": "npx @wordpress/create-block@latest --namespace storepress --no-plugin",
       "create-interactive-block": "npx @wordpress/create-block@latest --template @wordpress/create-block-interactive-template --namespace storepress --no-plugin",
       "create-woo-extension": "npx @wordpress/create-block@latest --template @woocommerce/create-woo-extension --namespace storepress",
-      "create-product-editor-block": "npx @wordpress/create-block@latest --template @woocommerce/create-product-editor-block --namespace storepress",
-
-      "prepare": "husky install && npx husky add .husky/pre-commit \"npm run pre-commit\"",
-      "pre-commit": "lint-staged"
+      "create-product-editor-block": "npx @wordpress/create-block@latest --template @woocommerce/create-product-editor-block --namespace storepress"
     },
     npmDependencies: [
       '@wordpress/interactivity',
@@ -100,10 +102,10 @@ module.exports = {
       '@storepress/utils',
       '@wordpress/dom-ready',
       '@wordpress/icons',
-      'classnames'
+      'clsx'
     ],
     npmDevDependencies: [
-      '@wordpress/scripts@27.9.0',
+      '@wordpress/scripts',
       '@wordpress/blocks',
       '@woocommerce/dependency-extraction-webpack-plugin',
       '@woocommerce/eslint-plugin',
@@ -111,9 +113,8 @@ module.exports = {
       '@wordpress/dependency-extraction-webpack-plugin@5.9.0',
       '@wordpress/i18n',
       'eslint-plugin-you-dont-need-lodash-underscore',
-      'fs-extra',
-      'husky@8.0.0',
-      'lint-staged@15.2.5',
+      'husky',
+      'lint-staged',
       'webpack-remove-empty-scripts',
       'eslint-plugin-prettier'
     ],
@@ -129,6 +130,7 @@ module.exports = {
         ],
         "*.php": [
           "npm run format:php",
+          "npm run stan:php",
           "npm run lint:php"
         ],
         "./*.md": [
@@ -155,7 +157,7 @@ module.exports = {
         "wpml-config.xml"
       ],
       "bin": {
-        "package": "./bin/package.js"
+        "package": "./tools/package.js"
       },
     },
     transformer: ( view ) => {

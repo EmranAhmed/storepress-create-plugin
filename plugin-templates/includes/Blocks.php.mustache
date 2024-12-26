@@ -7,6 +7,8 @@
 	 * @version    {{version}}
 	 */
 
+	declare( strict_types=1 );
+
 	namespace {{pascaleNamespace}}\{{slugPascalCase}};
 
 	defined( 'ABSPATH' ) || die( 'Keep Silent' );
@@ -32,7 +34,7 @@ class Blocks {
 		/**
 		 * Action to signal that Plugin has finished loading.
 		 *
-		 * @param Blocks $this Plugin Object.
+		 * @param Blocks $instance Plugin Object.
 		 *
 		 * @since {{version}}
 		 */

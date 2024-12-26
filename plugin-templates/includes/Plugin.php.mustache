@@ -7,11 +7,13 @@
 	 * @version    {{version}}
 	 */
 
+	declare( strict_types=1 );
+
 	namespace {{pascaleNamespace}}\{{slugPascalCase}};
 
 	defined( 'ABSPATH' ) || die( 'Keep Silent' );
 
-	use Exception;
+	use WP_Exception;
 
 	/**
 	 * Class Plugin.
@@ -44,14 +46,14 @@ class Plugin {
 			$this->includes();
 			$this->hooks();
 			$this->init();
-		} catch ( Exception $e ) {
+		} catch ( WP_Exception $e ) {
 			wp_trigger_error( __METHOD__, $e->getMessage() );
 		}
 
 		/**
 		 * Action to signal that Plugin has finished loading.
 		 *
-		 * @param Plugin $this Plugin Object.
+		 * @param Plugin $instance Plugin Object.
 		 *
 		 * @since {{version}}
 		 */
@@ -100,7 +102,7 @@ class Plugin {
 			return true;
 		}
 
-		throw new Exception( '"vendor/autoload_packages.php" file missing. Please run `composer install`' );
+		throw new WP_Exception( '"vendor/autoload_packages.php" file missing. Please run `composer install`' );
 	}
 
 	/**
