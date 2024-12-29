@@ -110,7 +110,7 @@ module.exports = {
       '@woocommerce/dependency-extraction-webpack-plugin',
       '@woocommerce/eslint-plugin',
       '@wordpress/base-styles',
-      '@wordpress/dependency-extraction-webpack-plugin@5.9.0',
+      '@wordpress/dependency-extraction-webpack-plugin',
       '@wordpress/i18n',
       'eslint-plugin-you-dont-need-lodash-underscore',
       'husky',
@@ -122,15 +122,12 @@ module.exports = {
     customPackageJSON: {
       "lint-staged": {
         "./src/**/*.scss": [
-          "npm run lint:css:fix",
           "npm run lint:css"
         ],
         "./src/**/*.{js,ts,tsx}": [
-          "npm run lint:js:fix",
           "npm run lint:js"
         ],
         "*.php": [
-          "npm run format:php",
           "npm run lint:php"
         ],
         "./*.md": [
