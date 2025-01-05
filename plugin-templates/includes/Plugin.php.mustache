@@ -13,7 +13,7 @@
 
 	defined( 'ABSPATH' ) || die( 'Keep Silent' );
 
-	use WP_Exception;
+	use Exception;
 
 	/**
 	 * Class Plugin.
@@ -46,7 +46,7 @@ class Plugin {
 			$this->includes();
 			$this->hooks();
 			$this->init();
-		} catch ( WP_Exception $e ) {
+		} catch ( Exception $e ) {
 			wp_trigger_error( __METHOD__, $e->getMessage() );
 		}
 
@@ -102,7 +102,7 @@ class Plugin {
 			return true;
 		}
 
-		throw new WP_Exception( '"vendor/autoload_packages.php" file missing. Please run `composer install`' );
+		throw new Exception( '"vendor/autoload_packages.php" file missing. Please run `composer install`' );
 	}
 
 	/**
