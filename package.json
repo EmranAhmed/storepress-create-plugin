@@ -1,6 +1,6 @@
 {
 	"name": "@storepress/create-plugin",
-	"version": "0.0.20",
+	"version": "0.0.21",
 	"description": "A template to be used with `@wordpress/create-block` to create a StorePress extension.",
 	"author": "StorePress",
 	"main": "index.js",
@@ -9,7 +9,7 @@
 		"url": "git+https://github.com/EmranAhmed/storepress-create-plugin.git"
 	},
 	"keywords": ["wordpress", "gutenberg", "block", "scaffold", "woocommerce", "storepress"],
-	"license": "GPL-3.0+",
+	"license": "GPL-2.0-or-later",
 	"bugs": {
 		"url": "https://github.com/EmranAhmed/storepress-create-plugin/issues"
 	},

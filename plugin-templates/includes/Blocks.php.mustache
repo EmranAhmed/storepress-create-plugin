@@ -1,23 +1,23 @@
 <?php
-	/**
-	 * Blocks API: Blocks class
-	 *
-	 * @package    {{pascaleNamespace}}/{{slugPascalCase}}
-	 * @since      {{version}}
-	 * @version    {{version}}
-	 */
+/**
+ * Blocks API: Blocks class
+ *
+ * @package    {{pascaleNamespace}}/{{slugPascalCase}}
+ * @since      {{version}}
+ * @version    {{version}}
+ */
 
-	declare( strict_types=1 );
+declare( strict_types=1 );
 
-	namespace {{pascaleNamespace}}\{{slugPascalCase}};
+namespace {{pascaleNamespace}}\{{slugPascalCase}};
 
-	defined( 'ABSPATH' ) || die( 'Keep Silent' );
+defined( 'ABSPATH' ) || die( 'Keep Silent' );
 
-	/**
-	 *  Blocks Class.
-	 *
-	 * @since {{version}}
-	 */
+/**
+ *  Blocks Class.
+ *
+ * @since {{version}}
+ */
 class Blocks {
 
 	use Instance;
@@ -45,6 +45,7 @@ class Blocks {
 	/**
 	 * Blocks Hooks
 	 *
+	 * @return void
 	 * @since {{version}}
 	 */
 	public function hooks() {
@@ -57,30 +58,31 @@ class Blocks {
 	/**
 	 * Initialize Blocks Included Classes
 	 *
+	 * @return void
 	 * @since {{version}}
 	 */
-	public function init() {}
+	public function init() {
+	}
 
 	/**
 	 *  Add custom block category
 	 *
-	 * @param array $block_categories Available block category.
+	 * @param array<int, array<string, string|null>> $block_categories Available block category.
 	 *
-	 * @return array With new block categories.
+	 * @return array<int, array<string, string|null>>  With new block categories.
 	 * @since {{version}}
 	 */
 	public function add_block_category( array $block_categories ): array {
-
 		$available_slugs = wp_list_pluck( $block_categories, 'slug' );
 
 		$category = array(
 			'slug'  => 'storepress',
 			'title' => esc_html__( 'StorePress', '{{textdomain}}' ),
-			'icon'  => null, // We will add category icon from js part.
+			'icon'  => null,
 		);
 
 		if ( ! in_array( 'storepress', $available_slugs, true ) ) {
-			array_unshift( $block_categories, $category );
+			$block_categories[] = $category;
 		}
 
 		return $block_categories;
@@ -89,12 +91,12 @@ class Blocks {
 	/**
 	 * Block Editor Script
 	 *
+	 * @return void
 	 * @since {{version}}
-	 * @see https://developer.wordpress.org/reference/functions/wp_set_script_translations/
-	 * @see https://developer.wordpress.org/block-editor/how-to-guides/internationalization/#load-translation-file
+	 * @see   https://developer.wordpress.org/reference/functions/wp_set_script_translations/
+	 * @see   https://developer.wordpress.org/block-editor/how-to-guides/internationalization/#load-translation-file
 	 */
 	public function block_editor_scripts() {
-
 		// Editor Scripts.
 		$editor_script_src_url    = {{namespaceSnakeCase}}_{{slugSnakeCase}}()->build_url() . '/editor-scripts.js';
 		$editor_script_asset_file = {{namespaceSnakeCase}}_{{slugSnakeCase}}()->build_path() . '/editor-scripts.asset.php';
@@ -107,6 +109,7 @@ class Blocks {
 	/**
 	 * Block Frontend Script
 	 *
+	 * @return void
 	 * @since {{version}}
 	 */
 	public function frontend_scripts() {
@@ -126,10 +129,10 @@ class Blocks {
 	/**
 	 * Register Blocks.
 	 *
+	 * @return void
 	 * @since {{version}}
 	 */
 	public function register_blocks() {
-
 		if ( ! file_exists( {{namespaceSnakeCase}}_{{slugSnakeCase}}()->build_path() ) ) {
 			return;
 		}
@@ -147,13 +150,12 @@ class Blocks {
 	/**
 	 * Returns an array of allowed HTML tags and attributes for a given context.
 	 *
-	 * @param array $args extra argument.
+	 * @param array<string, mixed> $args extra argument.
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 * @since {{version}}
 	 */
 	public function get_kses_allowed_html( array $args = array() ): array {
-
 		$defaults = wp_kses_allowed_html( 'post' );
 
 		$tags = array(
@@ -167,6 +169,7 @@ class Blocks {
 			array_keys( $tags ),
 			function ( $carry, $tag ) use ( $tags ) {
 				$carry[ $tag ] = array_fill_keys( $tags[ $tag ], true );
+
 				return $carry;
 			},
 			array()

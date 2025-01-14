@@ -1,23 +1,23 @@
 <?php
-	/**
-	 * Main Plugin Class File.
-	 *
-	 * @package    {{pascaleNamespace}}/{{slugPascalCase}}
-	 * @since      {{version}}
-	 * @version    {{version}}
-	 */
+/**
+ * Main Plugin Class File.
+ *
+ * @package    {{pascaleNamespace}}/{{slugPascalCase}}
+ * @since      {{version}}
+ * @version    {{version}}
+ */
 
-	declare( strict_types=1 );
+declare( strict_types=1 );
 
-	namespace {{pascaleNamespace}}\{{slugPascalCase}};
+namespace {{pascaleNamespace}}\{{slugPascalCase}};
 
-	defined( 'ABSPATH' ) || die( 'Keep Silent' );
+defined( 'ABSPATH' ) || die( 'Keep Silent' );
 
-	use Exception;
+use Exception;
 
-	/**
-	 * Class Plugin.
-	 */
+/**
+ * Class Plugin.
+ */
 class Plugin {
 
 	/**
@@ -25,7 +25,7 @@ class Plugin {
 	 * The instance will be created if it does not exist yet.
 	 *
 	 * @return self The main instance.
-	 * @since  {{version}}
+	 * @since {{version}}
 	 */
 	public static function instance(): self {
 		static $instance = null;
@@ -39,7 +39,7 @@ class Plugin {
 	/**
 	 * Initialise the plugin.
 	 *
-	 * @since  {{version}}
+	 * @since {{version}}
 	 */
 	protected function __construct() {
 		try {
@@ -47,7 +47,14 @@ class Plugin {
 			$this->hooks();
 			$this->init();
 		} catch ( Exception $e ) {
-			wp_trigger_error( __METHOD__, $e->getMessage() );
+			$message = sprintf( '<strong>%s:</strong> %s', $this->name(), $e->getMessage() );
+			add_action(
+				'admin_notices',
+				function () use ( $message ) {
+					printf( '<div class="notice notice-error"><p>%s</p></div>', wp_kses_data( $message ) );
+				},
+				50
+			);
 		}
 
 		/**
@@ -87,6 +94,22 @@ class Plugin {
 	}
 
 	/**
+	 * Get Plugin Name.
+	 *
+	 * @return string
+	 * @since {{version}}
+	 */
+	public function name(): string {
+		static $names;
+
+		if ( is_null( $names ) ) {
+			$names = get_file_data( $this->get_plugin_file(), array( 'Plugin Name' ) );
+		}
+
+		return esc_attr( $names[0] );
+	}
+
+	/**
 	 * Includes.
 	 *
 	 * @return bool
@@ -94,7 +117,6 @@ class Plugin {
 	 * @since {{version}}
 	 */
 	public function includes(): bool {
-
 		if ( file_exists( $this->vendor_path() . '/autoload_packages.php' ) ) {
 			require_once $this->vendor_path() . '/autoload_packages.php';
 			require_once __DIR__ . '/functions.php';
@@ -102,7 +124,7 @@ class Plugin {
 			return true;
 		}
 
-		throw new Exception( '"vendor/autoload_packages.php" file missing. Please run `composer install`' );
+		throw new Exception( '<em>vendor/autoload_packages.php</em> file missing. Please run <code>composer install</code>' );
 	}
 
 	/**
@@ -112,7 +134,6 @@ class Plugin {
 	 * @since {{version}}
 	 */
 	public function init() {
-
 		// Setup BLocks.
 		$this->get_blocks();
 
@@ -137,7 +158,7 @@ class Plugin {
 	}
 
 	/**
-	 * Get Plugin basename directory name
+	 * Get Plugin basename directory name.
 	 *
 	 * @return string
 	 * @since {{version}}
@@ -147,7 +168,7 @@ class Plugin {
 	}
 
 	/**
-	 * Get Plugin basename
+	 * Get Plugin basename.
 	 *
 	 * @return string
 	 * @since {{version}}
@@ -157,7 +178,7 @@ class Plugin {
 	}
 
 	/**
-	 * Get Plugin directory name
+	 * Get Plugin directory name.
 	 *
 	 * @return string
 	 * @since {{version}}
@@ -167,7 +188,7 @@ class Plugin {
 	}
 
 	/**
-	 * Get Plugin directory path
+	 * Get Plugin directory path.
 	 *
 	 * @return string
 	 * @since {{version}}
@@ -177,7 +198,7 @@ class Plugin {
 	}
 
 	/**
-	 * Get Plugin directory url
+	 * Get Plugin directory url.
 	 *
 	 * @return string
 	 * @since {{version}}
@@ -187,7 +208,7 @@ class Plugin {
 	}
 
 	/**
-	 * Get Plugin image url
+	 * Get Plugin image url.
 	 *
 	 * @return string
 	 * @since {{version}}
@@ -197,7 +218,7 @@ class Plugin {
 	}
 
 	/**
-	 * Get Assets URL
+	 * Get Assets URL.
 	 *
 	 * @return string
 	 * @since {{version}}
@@ -207,7 +228,7 @@ class Plugin {
 	}
 
 	/**
-	 * Get Asset Absolute Path
+	 * Get Asset Absolute Path.
 	 *
 	 * @return string
 	 * @since {{version}}
@@ -217,7 +238,7 @@ class Plugin {
 	}
 
 	/**
-	 * Get Vendor path
+	 * Get Vendor path.
 	 *
 	 * @return string
 	 * @since {{version}}
@@ -227,7 +248,7 @@ class Plugin {
 	}
 
 	/**
-	 * Get Vendor URL
+	 * Get Vendor URL.
 	 *
 	 * @return string
 	 * @since {{version}}
@@ -237,7 +258,7 @@ class Plugin {
 	}
 
 	/**
-	 * Get Node Modules build URL
+	 * Get Node Modules build URL.
 	 *
 	 * @return string
 	 * @since {{version}}
@@ -247,7 +268,7 @@ class Plugin {
 	}
 
 	/**
-	 * Get Node Modules build path
+	 * Get Node Modules build path.
 	 *
 	 * @return string
 	 * @since {{version}}
@@ -261,7 +282,7 @@ class Plugin {
 	 *
 	 * @param string $file Asset file name.
 	 *
-	 * @return int asset file make time.
+	 * @return integer
 	 * @since {{version}}
 	 */
 	public function assets_version( string $file ): int {
@@ -279,7 +300,7 @@ class Plugin {
 	}
 
 	/**
-	 * Get templates directory absolute path
+	 * Get templates directory absolute path.
 	 *
 	 * @return string
 	 * @since {{version}}
@@ -296,5 +317,45 @@ class Plugin {
 	 */
 	public function get_blocks(): Blocks {
 		return Blocks::instance();
+	}
+
+	/** Log
+	 *
+	 * @param string                            $title   log title.
+	 * @param array<string|int, mixed>|string[] $message log message.
+	 *
+	 * @return void
+	 * @since {{version}}
+	 */
+	public function log( string $title, array $message = array() ) {
+		// If WooCommerce Installed.
+		if ( ! function_exists( 'wc_get_logger' ) ) {
+			return;
+		}
+
+		if ( defined( 'WP_DEBUG' ) && true === constant( 'WP_DEBUG' ) ) {
+			$context = array(
+				'source' => $this->basename(),
+			);
+
+			wc_get_logger()->info( $title, array_merge( $message, $context ) );
+		}
+	}
+
+	/**
+	 * Get log file url.
+	 *
+	 * @return string
+	 * @since {{version}}
+	 */
+	public function get_log_file_url(): string {
+		return add_query_arg(
+			array(
+				'page'     => 'wc-status',
+				'tab'      => 'logs',
+				'log_file' => sprintf( '%s-%s.log', $this->basename(), sanitize_file_name( wp_hash( $this->basename() ) ) ),
+			),
+			admin_url( 'admin.php' )
+		);
 	}
 }

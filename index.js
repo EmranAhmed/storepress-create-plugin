@@ -37,10 +37,11 @@ module.exports = {
         default: 100
       },
     },
-    license: 'GPL-3.0+',
+    license: 'GPL-2.0-or-later',
 		customScripts: {
       "clean-composer": "rm -rf ./vendor && rm -rf ./composer.lock",
-      "postinstall": "git init -q && npm run clean-composer && composer install && husky install",
+      "postinstall": "git init -q && rm -rf ./.husky && npx husky init && echo \"npx lint-staged\" > .husky/pre-commit && npm run clean-composer && composer install",
+
 
       "stan:php": "composer run phpstan",
       "stan:php:report": "composer run phpstan-report",
