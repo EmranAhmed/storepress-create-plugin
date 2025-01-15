@@ -8,13 +8,18 @@ const { sep } = require( 'path' );
 
 // jquery --> window.jQuery
 // react-dom --> window.ReactDOM
+// Add `slick-carousel`, `@woocommerce/blocks-registry`,`@woocommerce/settings` on `.eslintrc.js` -> 'import/core-modules'
 const externalScriptsMap = {
 	// 'slick-carousel' : ['Slick'],
+	// '@woocommerce/blocks-registry': ['wc', 'wcBlocksRegistry'],
+    // '@woocommerce/settings': ['wc', 'wcSettings'],
 };
 
 // @babel/runtime/regenerator --> wp-polyfill
 const scriptHandleMap = {
 	// 'slick-carousel' : 'slick-carousel',
+	// '@woocommerce/blocks-registry': 'wc-blocks-registry',
+    // '@woocommerce/settings': 'wc-settings',
 };
 
 const externalModulesMap = {
@@ -86,7 +91,7 @@ function getFile( fileName ) {
 
 function getWebPackAlias() {
 	return {
-		'@utils': getFile('utils/Plugin'),
+		'@utils': getFile('utils/Plugin'), // Add @utils on .eslintrc.js -> 'import/core-modules'
 		//'@storepress/icons': getFile('packages/icons'),
 		//'@storepress/utils': getFile('packages/utils'),
 		//'@storepress/components': getFile('packages/components'),
