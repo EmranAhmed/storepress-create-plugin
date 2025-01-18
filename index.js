@@ -67,7 +67,7 @@ module.exports = {
       'lint:css:report': 'npm run lint:css -- --output-file scss-report.txt',
       'lint:css:fix': 'npm run lint:css -- --fix',
 
-      'lint:js': 'wp-scripts lint-js \'./src/**/*.js\'',
+      'lint:js': 'wp-scripts --format=pretty lint-js \'./src/**/*.js\'',
       'lint:js:report': 'npm run lint:js -- --format html --output-file lint-report.html',
       'lint:js:fix': 'npm run lint:js -- --fix',
 
@@ -120,6 +120,7 @@ module.exports = {
       'fs-extra',
       'webpack-remove-empty-scripts',
       'eslint-plugin-prettier',
+      'eslint-formatter-pretty@5',
     ],
     customPackageJSON: {
       'lint-staged': {
