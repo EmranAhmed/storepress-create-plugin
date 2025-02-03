@@ -1,55 +1,87 @@
 /**
  * External dependencies
  */
-import { getOptionsFromAttribute } from '@storepress/utils';
+import { getOptionsFromAttribute, triggerEvent } from '@storepress/utils'
 
-function Plugin(element, options) {
-	// Default Settings
-	const DEFAULTS = {
-		pointerSize: 20,
-	};
+export function Plugin (element, options) {
+// Default Settings
+  const DEFAULTS = {}
 
-	// Collecting settings from html attribute
-	const ATTRIBUTE = 'slider-settings';
+  const PRIVATE = {}
 
-	// Do what you need and return expose fn.
-	const init = () => {
-		this.element = element;
-		this.settings = Object.assign(
-			{},
-			DEFAULTS,
-			options,
-			getOptionsFromAttribute(this.element, ATTRIBUTE)
-		);
-		//  console.log('init')
-		addEvents();
+// Collecting settings from html attribute
+  const ATTRIBUTE = 'plugin-settings' // html data-plugin-settings
 
-		return expose();
-	};
+  const CLASSES = {
+    NEW: 'new-class',
+  }
 
-	const addPointer = (event) => {
-		window.console.log(event.target.value);
-	};
+  const noop = () => () => {}
 
-	const addEvents = () => {
-		this.element.querySelectorAll('input').forEach((el) => {
-			el.addEventListener('input', addPointer);
-		});
-	};
+  const getElementComputedStyle = (cssProperty) => {
+    return window.getComputedStyle(this.$element).getPropertyValue(cssProperty)
+  }
 
-	const removeEvents = () => {
-		this.element.querySelectorAll('input').forEach((el) => {
-			el.removeEventListener('input', addPointer);
-		});
-	};
+  const getComputedStyle = ($element, property) => {
+    return window.getComputedStyle($element).getPropertyValue(property)
+  }
 
-	// Expose to public.
-	const expose = () => ({
-		element: this.element,
-		removeEvents,
-	});
+  const initial = () => {
+    console.log(this.settings)
+    triggerEvent(this.$element, 'afterInit', {})
+  }
 
-	return init();
+  const addClasses = () => {
+    this.$element.classList.add(CLASSES.NEW)
+  }
+
+  const addEvents = () => {
+
+    this.$element.addEventListener('click', (e) => {
+
+      console.log(e.target.getAttribute('class'))
+
+    }, { signal: this.signal, passive: true })
+
+  }
+
+  const removeEvents = () => {
+
+    this.controller.abort('Reset')
+  }
+
+  const removeClasses = () => {
+    this.$element.classList.remove(CLASSES.NEW)
+  }
+
+  const reset = () => {
+    removeClasses()
+    removeEvents()
+  }
+
+// Expose reset to public.
+  const expose = () => ({
+    reset,
+  })
+
+// Do what you need and return expose fn.
+  const init = () => {
+    this.$element = element
+    this.settings = {
+      ...DEFAULTS, ...options, ...getOptionsFromAttribute(this.$element, ATTRIBUTE), ...PRIVATE,
+    }
+
+    this.controller = new AbortController()
+    this.signal = this.controller.signal
+
+    initial()
+
+    addClasses()
+
+    addEvents()
+
+    return expose()
+  }
+
+  return init()
 }
-
-export { Plugin };

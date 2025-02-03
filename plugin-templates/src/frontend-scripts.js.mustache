@@ -1,17 +1,96 @@
 /**
  * External dependencies
  */
-import domReady from '@wordpress/dom-ready';
-import { createPluginInstance } from '@storepress/utils';
+import domReady from '@wordpress/dom-ready'
+import { createPluginInstance, triggerEvent, getPluginInstance } from '@storepress/utils'
 
 /**
  * Internal dependencies
  */
-import './frontend.scss';
+import './frontend.scss'
 
- // Please check: https://emranahmed.github.io/storepress-packages/?path=/docs/utils-plugin-example--docs
-import { Plugin } from '@utils';
+// Please check: https://emranahmed.github.io/storepress-packages/?path=/docs/utils-plugin-example--docs
+/**
+ * Internal dependencies
+ */
+import { Plugin as Instance } from '@utils'
+
+export default function {{pascaleSlug}}Plugin(){
+  const Plugin = {
+    createInstance (element, options) {
+      return createPluginInstance(element, options, Instance)
+    },
+
+    getInstance (element) {
+      return getPluginInstance(element)
+    },
+
+    init ($selector, options) {
+      for (const { element, reset } of this.createInstance($selector, options)) {
+        element.addEventListener('destroy', reset)
+      }
+    },
+
+    destroy ($selector) {
+      for (const { destroy } of this.getInstance($selector)) {
+        destroy()
+      }
+    },
+
+    reload ($selector, options) {
+      this.destroy($selector)
+      this.init($selector, options)
+    },
+  }
+
+  document.addEventListener('storepress_plugin_init', (event) => {
+
+    const defaultSettings = {}
+    const settings = { ...defaultSettings, ...event.detail?.settings }
+    const element = event.detail?.element
+
+    if (Array.isArray(element)) {
+      for (const el of element) {
+        Plugin.init(el, settings)
+      }
+    } else {
+      Plugin.init(element, settings)
+    }
+  }, { passive: true })
+
+  document.addEventListener('storepress_plugin_destroy', (event) => {
+
+    const element = event.detail?.element
+
+    if (Array.isArray(element)) {
+      for (const el of element) {
+        Plugin.destroy(el)
+      }
+    } else {
+      Plugin.destroy(element)
+    }
+
+  }, { passive: true })
+
+  document.addEventListener('storepress_plugin_reload', (event) => {
+    const defaultSettings = {}
+    const settings = { ...defaultSettings, ...event.detail?.settings }
+    const element = event.detail?.element
+
+    if (Array.isArray(element)) {
+      for (const el of element) {
+        Plugin.reload(el, settings)
+      }
+    } else {
+      Plugin.reload(element, settings)
+    }
+  }, { passive: true })
+}
 
 domReady(function () {
-
-});
+  {{pascaleSlug}}Plugin()
+  triggerEvent(document, 'storepress_plugin_init', {
+    element: ['[data-plugin-settings]'],
+    settings: {},
+  })
+})
