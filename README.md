@@ -7,7 +7,7 @@ This is a template for [`@wordpress/create-block`](https://developer.wordpress.o
 This template can be used by running the following command:
 
 ```bash
-npx @wordpress/create-block@latest --template @storepress/create-plugin my-extension-name
+npx @wordpress/create-block@latest --template @storepress/create-plugin my-extension-name --target-dir .
 ```
 
 Navigate to the newly created folder and get started.
