@@ -14,10 +14,10 @@ Navigate to the newly created folder and get started.
 
 ```
 cd my-extension-name
-git init                 # Init git
-npm install              # Install dependencies
-npm run build            # Build the javascript
-npx @wp-now/wp-now start # Start Wordpress environment
+chmod +x ./tools/package.js     # Make Package JS Executable.
+npm i                           # Install dependencies
+npm start                       # Start developing
+npx @wp-now/wp-now start        # Start Wordpress environment
 ```
 
 ## Development

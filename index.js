@@ -41,9 +41,9 @@ module.exports = {
     },
     license: 'GPL-2.0-or-later',
     customScripts: {
+      "install-plugin-check": "rm -rf ./wp-plugin-check && npx gitget WordPress/plugin-check/phpcs-sniffs wp-plugin-check",
       'clean-composer': 'rm -rf ./vendor && rm -rf ./composer.lock',
-      'postinstall': 'git init -q && rm -rf ./.husky && npx husky init && echo "npx lint-staged" > .husky/pre-commit && npm run clean-composer && composer install',
-
+      "postinstall": "git init -q && rm -rf ./.husky && npm run install-plugin-check && npm run clean-composer && composer install && npx husky init && echo \"npx lint-staged\" > .husky/pre-commit",
       'stan:php': 'composer run phpstan',
       'stan:php:report': 'composer run phpstan-report',
 
@@ -52,7 +52,7 @@ module.exports = {
       'lint:php:fix': 'composer run format',
       'format:php': 'composer run format',
 
-      'prebuild': 'rm -rf ./build && npm run clean-composer && composer install --no-dev --optimize-autoloader',
+      'prebuild': 'rm -rf ./build',
       'build': 'npm run start -- --no-watch && wp-scripts build --webpack-copy-php --experimental-modules',
 
       'check-engines': 'wp-scripts check-engines',
@@ -74,9 +74,9 @@ module.exports = {
       'lint:md:docs': 'wp-scripts lint-md-docs',
       'lint:pkg-json': 'wp-scripts lint-pkg-json',
 
-      'packages-update': 'wp-scripts packages-update',
+      'packages-update': 'wp-scripts packages-update && composer update && composer dump-autoload',
 
-      'prepackage': 'rm -rf ./languages && rm -rf ./${npm_package_name}.zip && npm run language && npm run build',
+      'prepackage': 'rm -rf ./languages && rm -rf ./${npm_package_name}.zip && npm run language && npm run build && npm run clean-composer && composer install --no-dev --optimize-autoloader',
       'package': './tools/package.js',
       'postpackage': 'npm run clean-composer && composer install',
 
@@ -152,6 +152,7 @@ module.exports = {
         'templates/**',
         'languages/**',
         '*.php',
+        'composer.json',
         'block.json',
         'changelog.*',
         'README.txt',
@@ -179,6 +180,11 @@ module.exports = {
         constantSlug: constantSlug,
         kebabSlug: kebabSlug,
         pascaleSlug: pascaleSlug,
+
+        GITHUB_REPOSITORY_NAME: "${{ github.event.repository.name }}",
+        GITHUB_RELEASE_NAME: "${{ env.RELEASE_NAME }}",
+        GITHUB_RELEASE_TAG: "${{ env.RELEASE_TAG }}",
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
       }
     },
   },

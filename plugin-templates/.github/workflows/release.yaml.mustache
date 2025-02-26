@@ -10,7 +10,7 @@ on:
 permissions: write-all
 
 env:
-  REPOSITORY_NAME: ${{ github.event.repository.name }}
+  REPOSITORY_NAME: {{ GITHUB_REPOSITORY_NAME }}
 
 name: Release
 
@@ -64,8 +64,8 @@ jobs:
       - name: "Upload Release"
         uses: softprops/action-gh-release@v2
         with:
-          files: ./${{ env.RELEASE_NAME }}.zip
+          files: ./{{ GITHUB_RELEASE_NAME }}.zip
           make_latest: true
-          name: Release - v${{ env.RELEASE_TAG }}
+          name: Release - v{{ GITHUB_RELEASE_TAG }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: {{ GITHUB_TOKEN }}
