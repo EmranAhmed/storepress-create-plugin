@@ -123,6 +123,22 @@ module.exports = {
       'eslint-formatter-pretty@5',
     ],
     customPackageJSON: {
+      "private": true,
+      "license": "GPL-2.0-or-later",
+      "keywords": [
+        "wordpress",
+        "gutenberg",
+        "block",
+        "storepress"
+      ],
+      "homepage": "https://github.com/USERNAME/REPO",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/USERNAME/REPO"
+      },
+      "bugs": {
+        "url": "https://github.com/USERNAME/REPO/issues"
+      },
       'lint-staged': {
         './src/**/*.scss': [
           'npm run lint:css',

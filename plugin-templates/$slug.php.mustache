@@ -28,45 +28,9 @@ declare( strict_types=1 );
 defined( 'ABSPATH' ) || die( 'Keep Silent' );
 
 use {{pascaleNamespace}}\{{slugPascalCase}}\Plugin;
-use Automattic\WooCommerce\Utilities\FeaturesUtil;
 
 if ( ! defined( '{{constantNamespace}}_{{constantSlug}}_PLUGIN_FILE' ) ) {
 	define( '{{constantNamespace}}_{{constantSlug}}_PLUGIN_FILE', __FILE__ );
-}
-
-// Include the Plugin class.
-if ( ! class_exists( '\{{pascaleNamespace}}\{{slugPascalCase}}\Plugin' ) ) {
-	require_once plugin_dir_path( __FILE__ ) . '/includes/Plugin.php';
-}
-
-/**
- * WooCommerce fallback notice.
- *
- * @return void
- * @since {{version}}
- */
-function {{namespaceSnakeCase}}_{{slugSnakeCase}}_missing_wc_notice() {
-	$text = esc_html__( 'WooCommerce', '{{textdomain}}' );
-	if ( current_user_can( 'install_plugins' ) ) {
-		$plugin_args = array(
-			'tab'       => 'plugin-information',
-			'plugin'    => 'woocommerce',
-			'TB_iframe' => 'true',
-			'width'     => '640',
-			'height'    => '500',
-		);
-
-		$link = add_query_arg( $plugin_args, admin_url( 'plugin-install.php' ) );
-
-		$message = __( '<strong>{{title}}</strong> is an add-on of ', '{{textdomain}}' );
-
-		printf( '<div class="notice notice-error"><p>%1$s <a class="thickbox open-plugin-details-modal" href="%2$s"><strong>%3$s</strong></a></p></div>', wp_kses_post( $message ), esc_url( $link ), esc_html( $text ) );
-	} else {
-		/* translators: %1$s WooCommerce, %2$s WooCommerce download URL link. */
-		$message = sprintf( esc_html__( '{{title}} requires %1$s to be installed and active. You can download %2$s here.', '{{textdomain}}' ), esc_html( $text ), '<a href="https://wordpress.org/plugins/woocommerce/" target="_blank">WooCommerce</a>' );
-
-		printf( '<div class="error"><p><strong>%s</strong></p></div>', wp_kses_post( $message ) );
-	}
 }
 
 /**
@@ -76,6 +40,21 @@ function {{namespaceSnakeCase}}_{{slugSnakeCase}}_missing_wc_notice() {
  * @since {{version}}
  */
 function {{namespaceSnakeCase}}_{{slugSnakeCase}}(): Plugin {
+
+	// Include the Plugin class.
+	if ( ! class_exists( '\{{pascaleNamespace}}\{{slugPascalCase}}\Plugin' ) ) {
+		require_once plugin_dir_path( __FILE__ ) . '/includes/Plugin.php';
+	}
+
+	/**
+	 * If plugin has extended version
+	 *
+	 * @example:
+	 * if ( function_exists( '{{namespaceSnakeCase}}_{{slugSnakeCase}}_pro' ) ) {
+	 *  return {{namespaceSnakeCase}}_{{slugSnakeCase}}_pro();
+	 * }
+	 */
+
 	return Plugin::instance();
 }
 
@@ -86,44 +65,9 @@ function {{namespaceSnakeCase}}_{{slugSnakeCase}}(): Plugin {
  * @since {{version}}
  */
 function {{namespaceSnakeCase}}_{{slugSnakeCase}}_init(): void {
-	load_plugin_textdomain( '{{textdomain}}', false, plugin_dir_path( __FILE__ ) . 'languages' );
-
-	// Include the main class.
-
-	/**
-	 * If plugin dependent with woocommerce.
-	 *
-	 * @example:
-	 * if ( ! class_exists( 'WooCommerce' ) ) {
-	 * add_action( 'admin_notices', '{{namespaceSnakeCase}}_{{slugSnakeCase}}_missing_wc_notice' );
-	 * return;
-	 * }
-	 */
-
-	/**
-	 * If plugin has extended version
-	 *
-	 * @example:
-	 * if ( function_exists( '{{namespaceSnakeCase}}_{{slugSnakeCase}}_pro' ) ) {
-	 *  {{namespaceSnakeCase}}_{{slugSnakeCase}}_pro();
-	 *  return;
-	 * }
-	 */
 
 	{{namespaceSnakeCase}}_{{slugSnakeCase}}();
 }
 
 // Get the plugin running.
 add_action( 'plugins_loaded', '{{namespaceSnakeCase}}_{{slugSnakeCase}}_init' );
-
-/**
- * Declare compatibility with custom order tables for WooCommerce.
- *
- * @example:
- *
- * add_action('before_woocommerce_init', function () {
- * if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
- * FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
- * }
- * });
- */
