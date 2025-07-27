@@ -10,7 +10,7 @@ on:
 permissions: write-all
 
 env:
-  REPOSITORY_NAME: { { GITHUB_REPOSITORY_NAME } }
+  REPOSITORY_NAME: {{ GITHUB_REPOSITORY_NAME }}
 
 name: Release
 
@@ -73,6 +73,6 @@ jobs:
           files: ./{{ GITHUB_RELEASE_NAME }}.zip
           make_latest: true
           name: Release - v{{ GITHUB_RELEASE_TAG }}
-          body: ${{ steps.changelog.outputs.changelog }}
+          body: {{ GITHUB_CHANGELOG_CONTENT }}
         env:
-          GITHUB_TOKEN: { { GITHUB_TOKEN } }
+          GITHUB_TOKEN: {{ GITHUB_TOKEN }}

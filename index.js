@@ -201,6 +201,7 @@ module.exports = {
         GITHUB_REPOSITORY_NAME: "${{ github.event.repository.name }}",
         GITHUB_RELEASE_NAME: "${{ env.RELEASE_NAME }}",
         GITHUB_RELEASE_TAG: "${{ env.RELEASE_TAG }}",
+        GITHUB_CHANGELOG_CONTENT: "${{ steps.changelog.outputs.changelog }}",
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
       }
     },
