@@ -10,7 +10,7 @@ on:
 permissions: write-all
 
 env:
-  REPOSITORY_NAME: {{ GITHUB_REPOSITORY_NAME }}
+  REPOSITORY_NAME: { { GITHUB_REPOSITORY_NAME } }
 
 name: Release
 
@@ -39,13 +39,15 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           coverage: none
-          php-version: "7.4"
+          php-version: "8.3"
 
       - name: "Setup and Install Node.js"
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-      - run: npm clean-install
+
+      - name: "NPM Install"
+        run: npm install
 
       - name: "Make Zip"
         run: npm run plugin-zip --if-present
@@ -54,9 +56,16 @@ jobs:
         run: |
           echo "RELEASE_TAG=$(node -p -e "require('./package.json').version")" >> $GITHUB_ENV
 
-      - name: "Get release file base name."
+      - name: "Get release filename."
         run: |
           echo "RELEASE_NAME=$(node -p -e "require('./package.json').name")" >> $GITHUB_ENV
+
+      - name: "Get Changelog"
+        id: changelog
+        run: |
+            echo "changelog<<EOF" >> $GITHUB_OUTPUT
+            node ./tools/changelog.js >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
 
       - name: "Upload Release"
         uses: softprops/action-gh-release@v2
@@ -64,5 +73,6 @@ jobs:
           files: ./{{ GITHUB_RELEASE_NAME }}.zip
           make_latest: true
           name: Release - v{{ GITHUB_RELEASE_TAG }}
+          body: ${{ steps.changelog.outputs.changelog }}
         env:
-          GITHUB_TOKEN: {{ GITHUB_TOKEN }}
+          GITHUB_TOKEN: { { GITHUB_TOKEN } }

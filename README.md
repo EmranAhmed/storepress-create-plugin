@@ -15,6 +15,7 @@ Navigate to the newly created folder and get started.
 ```
 cd my-extension-name
 chmod +x ./tools/package.js     # Make Package JS Executable.
+chmod +x ./tools/changelog.js   # Make Changelog JS Executable.
 npm i                           # Install dependencies
 npm start                       # Start developing
 npx @wp-now/wp-now start        # Start Wordpress environment

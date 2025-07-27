@@ -121,6 +121,7 @@ module.exports = {
       'webpack-remove-empty-scripts',
       'eslint-plugin-prettier',
       'eslint-formatter-pretty@5',
+      'prettier@npm:wp-prettier@latest'
     ],
     customPackageJSON: {
       "private": true,
