@@ -21,10 +21,10 @@ trait Singleton {
 	 * @return self The main instance.
 	 * @since {{version}}
 	 */
-	public static function instance(): self {
+	public static function instance( ...$args ): self {
 		static $instance = null;
 		if ( is_null( $instance ) ) {
-			$instance = new self();
+			$instance = new self( ...$args );
 		}
 
 		return $instance;

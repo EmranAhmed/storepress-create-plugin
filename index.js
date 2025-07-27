@@ -140,24 +140,6 @@ module.exports = {
       "bugs": {
         "url": "https://github.com/USERNAME/REPO/issues"
       },
-      'lint-staged': {
-        './src/**/*.scss': [
-          'npm run lint:css',
-        ],
-        './src/**/*.{js,ts,tsx}': [
-          'npm run lint:js',
-        ],
-        '*.php': [
-          'npm run lint:php',
-          'npm run stan:php',
-        ],
-        './*.md': [
-          'npm run lint:md:docs',
-        ],
-        './package.json': [
-          'npm run lint:pkg-json',
-        ],
-      },
       'files': [
         'vendor/**',
         'admin/**',
