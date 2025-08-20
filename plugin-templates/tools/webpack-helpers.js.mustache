@@ -13,6 +13,7 @@ const externalScriptsMap = {
 	// 'slick-carousel' : ['Slick'],
 	// '@woocommerce/blocks-registry': ['wc', 'wcBlocksRegistry'],
     // '@woocommerce/settings': ['wc', 'wcSettings'],
+    '@storepress/utils': ['StorePress', 'Utils'],
 };
 
 // @babel/runtime/regenerator --> wp-polyfill
@@ -20,6 +21,7 @@ const scriptHandleMap = {
 	// 'slick-carousel' : 'slick-carousel',
 	// '@woocommerce/blocks-registry': 'wc-blocks-registry',
     // '@woocommerce/settings': 'wc-settings',
+    '@storepress/utils': 'storepress-utils',
 };
 
 const externalModulesMap = {
@@ -90,6 +92,10 @@ function getFile( fileName ) {
 	return fromProjectRoot( getProjectSourcePath() + sep + fileName );
 }
 
+function getRootFile (fileName) {
+	return fromProjectRoot(fileName)
+}
+
 function getWebPackAlias() {
 	return {
 		'@utils': getFile('utils/Plugin'), // Add @utils on .eslintrc.js -> 'import/core-modules'
@@ -101,6 +107,7 @@ function getWebPackAlias() {
 
 module.exports = {
 	getFile,
+	getRootFile,
 	getWebPackAlias,
 	requestToExternal,
 	requestToHandle,
