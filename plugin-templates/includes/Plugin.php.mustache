@@ -157,7 +157,6 @@ class Plugin {
 	public function hooks() {
 		// Register with hook.
 		add_action( 'before_woocommerce_init', array( $this, 'custom_order_tables_compatibility' ) );
-		add_action( 'init', array( $this, 'load_translations' ) );
 	}
 
 	/**
@@ -170,16 +169,6 @@ class Plugin {
 		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
 			FeaturesUtil::declare_compatibility( 'custom_order_tables', $this->get_plugin_file() );
 		}
-	}
-
-	/**
-	 * Load Plugin Translation Files.
-	 *
-	 * @return void
-	 * @since {{version}}
-	 */
-	public function load_translations() {
-		load_plugin_textdomain( '{{textdomain}}', false, $this->plugin_dirname() . '/languages' );
 	}
 
 	/**

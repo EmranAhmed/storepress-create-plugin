@@ -14,11 +14,12 @@ Navigate to the newly created folder and get started.
 
 ```
 cd my-extension-name
-chmod +x ./tools/package.js     # Make Package JS Executable.
-chmod +x ./tools/changelog.js   # Make Changelog JS Executable.
-npm i                           # Install dependencies
-npm start                       # Start developing
-npx @wp-now/wp-now start        # Start Wordpress environment
+chmod +x ./tools/package.js                         # Make Package JS Executable.
+chmod +x ./tools/changelog.js                       # Make Changelog JS Executable.
+npm i                                               # Install dependencies
+npm i prettier@npm:wp-prettier@latest --save-dev    # Install wp-prettier
+npm start                                           # Start developing
+npx @wp-now/wp-now start                            # Start Wordpress environment
 ```
 
 ## Development
@@ -26,7 +27,7 @@ npx @wp-now/wp-now start        # Start Wordpress environment
 For development on this tool itself, you can also install from a local directory.
 
 ```bash
-npx @wordpress/create-block@latest --template ./path/to/storepress/create-plugin my-extension-name
+npx @wordpress/create-block@latest --template ./create-plugin example-extension-name
 ```
 
 ### Add Tests

@@ -41,9 +41,8 @@ module.exports = {
     },
     license: 'GPL-2.0-or-later',
     customScripts: {
-      "install-plugin-check": "rm -rf ./wp-plugin-check && npx gitget WordPress/plugin-check/phpcs-sniffs wp-plugin-check",
-      'clean-composer': 'rm -rf ./vendor && rm -rf ./composer.lock',
-      "postinstall": "git init -q && rm -rf ./.husky && npm run install-plugin-check && npm run clean-composer && composer install && npx husky init && echo \"npx lint-staged\" > .husky/pre-commit",
+      'clean-composer': 'rimraf vendor',
+      "postinstall": "git init -q && rimraf .husky && npm run clean-composer && composer install && npx husky init && echo \"npx lint-staged\" > .husky/pre-commit",
       'stan:php': 'composer run phpstan',
       'stan:php:report': 'composer run phpstan-report',
 
@@ -52,7 +51,7 @@ module.exports = {
       'lint:php:fix': 'composer run format',
       'format:php': 'composer run format',
 
-      'prebuild': 'rm -rf ./build',
+      'prebuild': 'rimraf build',
       'build': 'npm run start -- --no-watch && wp-scripts build --webpack-copy-php --experimental-modules',
 
       'check-engines': 'wp-scripts check-engines',
@@ -76,7 +75,7 @@ module.exports = {
 
       'packages-update': 'wp-scripts packages-update && composer update && composer dump-autoload',
 
-      'prepackage': 'rm -rf ./languages && rm -rf ./${npm_package_name}.zip && npm run language && npm run build && npm run clean-composer && composer install --no-dev --optimize-autoloader',
+      'prepackage': 'rimraf languages ${npm_package_name}.zip && npm run language && npm run build && npm run clean-composer && composer install --no-dev --optimize-autoloader',
       'package': './tools/package.js',
       'postpackage': 'npm run clean-composer && composer install',
 
@@ -85,7 +84,7 @@ module.exports = {
       'test:e2e': 'wp-scripts test-e2e',
       'test:unit': 'wp-scripts test-unit-js',
 
-      'start': 'rm -rf ./build && wp-scripts start --webpack-copy-php --experimental-modules',
+      'start': 'rimraf build && wp-scripts start --webpack-copy-php --experimental-modules',
 
       'language': 'npm run language:make-pot && npm run language:make-json',
       'language:make-pot': './vendor/bin/wp i18n make-pot . languages/${npm_package_name}.pot --exclude=tools,node_modules,vendor,languages --package-name="StorePress Plugin"',
@@ -98,30 +97,32 @@ module.exports = {
       'create-product-editor-block': 'npx @wordpress/create-block@latest --template @woocommerce/create-product-editor-block --namespace storepress',
     },
     npmDependencies: [
-      '@wordpress/interactivity',
-      '@storepress/components',
-      '@storepress/icons',
-      '@storepress/utils',
-      '@wordpress/dom-ready',
-      '@wordpress/icons',
-      'clsx',
+      '@wordpress/interactivity@^6.31.0',
+      '@storepress/components@^0.0.4',
+      '@storepress/icons@^2.0.0',
+      '@storepress/utils@^0.12.2',
+      '@wordpress/dom-ready@^4.31.0',
+      '@wordpress/icons@^10.31.0',
+      'clsx@^2.1.1',
     ],
     npmDevDependencies: [
-      '@wordpress/scripts',
-      '@wordpress/blocks',
-      '@woocommerce/dependency-extraction-webpack-plugin',
-      '@woocommerce/eslint-plugin',
-      '@wordpress/base-styles',
-      '@wordpress/dependency-extraction-webpack-plugin',
-      '@wordpress/i18n',
-      'eslint-plugin-you-dont-need-lodash-underscore',
-      'husky',
-      'lint-staged',
-      'fs-extra',
-      'webpack-remove-empty-scripts',
-      'eslint-plugin-prettier',
-      'eslint-formatter-pretty@5',
+      '@wordpress/scripts@^30.24.0',
+      '@wordpress/blocks@^15.4.0',
+      '@woocommerce/dependency-extraction-webpack-plugin@^4.0.0',
+      '@woocommerce/eslint-plugin@^2.3.0',
+      '@wordpress/base-styles@^6.7.0',
+      '@wordpress/dependency-extraction-webpack-plugin@^6.31.0',
+      '@wordpress/i18n@^6.4.0',
+      'eslint-plugin-you-dont-need-lodash-underscore@^6.14.0',
+      'husky@^9.1.7',
+      'lint-staged@^16.2.7',
+      'fs-extra@^11.3.2',
+      'webpack-remove-empty-scripts@^1.1.1',
+      'eslint-plugin-prettier@5.2.1',
+      'eslint-formatter-pretty@^7.0.0',
+      'rimraf@^6.0.1',
       'prettier@npm:wp-prettier@latest'
+      //'prettier@https://github.com/Automattic/wp-prettier/archive/refs/heads/wp-prettier-2.8.5.zip'
     ],
     customPackageJSON: {
       "private": true,
@@ -156,10 +157,7 @@ module.exports = {
         'changelog.*',
         'README.txt',
         'wpml-config.xml',
-      ],
-      'bin': {
-        'package': './tools/package.js',
-      },
+      ]
     },
     transformer: (view) => {
       const todayDate = new Date().toJSON().slice(0, 10)
