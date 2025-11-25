@@ -121,7 +121,7 @@ module.exports = {
       'eslint-plugin-prettier@5.2.1',
       'eslint-formatter-pretty',
       'rimraf',
-      'prettier@npm:wp-prettier@latest'
+      'prettier@npm:wp-prettier'
       //'prettier@https://github.com/Automattic/wp-prettier/archive/refs/heads/wp-prettier-2.8.5.zip'
     ],
     customPackageJSON: {
