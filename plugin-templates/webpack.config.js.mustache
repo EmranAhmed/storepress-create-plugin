@@ -2,6 +2,7 @@ const [
 	defaultJSConfig,
 	defaultModuleConfig,
 ] = require( '@wordpress/scripts/config/webpack.config' );
+
 const {
 	requestToExternal,
 	requestToHandle,
@@ -9,7 +10,7 @@ const {
 	getFile,
 	getRootFile,
 	getWebPackAlias,
-} = require( './tools/webpack-helpers' );
+} = require('./tools/webpack-helpers')
 const WoocommerceDependencyExtractionWebpackPlugin = require( '@woocommerce/dependency-extraction-webpack-plugin' );
 const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
 const RemoveEmptyScriptsPlugin = require( 'webpack-remove-empty-scripts' );

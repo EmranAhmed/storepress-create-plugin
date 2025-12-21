@@ -7,17 +7,18 @@ This is a template for [`@wordpress/create-block`](https://developer.wordpress.o
 This template can be used by running the following command:
 
 ```bash
-npx @wordpress/create-block@latest --template @storepress/create-plugin my-extension-name --target-dir .
+npx @wordpress/create-block@latest my-extension-name --template @storepress/create-plugin --target-dir .
 ```
 
 Navigate to the newly created folder and get started.
 
-```
+```bash
 cd my-extension-name
 chmod +x ./tools/package.js                         # Make Package JS Executable.
 chmod +x ./tools/changelog.js                       # Make Changelog JS Executable.
+chmod +x ./tools/packages-install.js                # Make Package Install JS Executable.
+chmod +x ./tools/packages-update.js.js              # Make Package Update JS Executable.
 npm i                                               # Install dependencies
-npm i prettier@npm:wp-prettier@latest --save-dev    # Install wp-prettier
 npm start                                           # Start developing
 npx @wp-now/wp-now start                            # Start Wordpress environment
 ```
@@ -27,7 +28,7 @@ npx @wp-now/wp-now start                            # Start Wordpress environmen
 For development on this tool itself, you can also install from a local directory.
 
 ```bash
-npx @wordpress/create-block@latest --template ./create-plugin example-extension-name
+npx @wordpress/create-block@latest example-extension-name --template ./create-plugin 
 ```
 
 ### Add Tests
