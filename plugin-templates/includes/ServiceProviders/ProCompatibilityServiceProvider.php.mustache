@@ -1,0 +1,61 @@
+<?php
+	/**
+	 * Pro Compatibility Service Provider.
+	 *
+	 * @package    {{pascaleNamespace}}/{{slugPascalCase}}
+	 * @since      {{version}}
+	 * @version    {{version}}
+	 */
+
+	declare( strict_types=1 );
+
+	namespace {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders;
+
+	defined( 'ABSPATH' ) || die( 'Keep Silent' );
+
+	use StorePress\AdminUtils\Abstracts\AbstractServiceProvider;
+	use StorePress\AdminUtils\Traits\SingletonTrait;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Containers\Container;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Integrations\ProPluginInCompatibility;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Traits\PluginUtilityTrait;
+
+	/**
+	 * Binds the ProPluginInCompatibility service into the container.
+	 *
+	 * @name ProCompatibilityServiceProvider
+	 */
+class ProCompatibilityServiceProvider extends AbstractServiceProvider {
+
+	use SingletonTrait;
+	use PluginUtilityTrait;
+
+	// =====================================================================
+	// Service Lifecycle Methods
+	// =====================================================================
+
+	/**
+	 * Binds the ProPluginInCompatibility service into the container.
+	 *
+	 * @return void
+	 * @since {{version}}
+	 */
+	public function register(): void {
+
+		$this->get_container()->register(
+			ProPluginInCompatibility::class,
+			function () {
+				return ProPluginInCompatibility::instance();
+			}
+		);
+	}
+
+	/**
+	 * Boots the ProPluginInCompatibility service (disabled by default).
+	 *
+	 * @return void
+	 * @since {{version}}
+	 */
+	public function boot(): void {
+		$this->get_container()->get( ProPluginInCompatibility::class );
+	}
+}

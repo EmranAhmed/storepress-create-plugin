@@ -1,0 +1,61 @@
+<?php
+	/**
+	 * Blocks Service Provider.
+	 *
+	 * @package    {{pascaleNamespace}}/{{slugPascalCase}}
+	 * @since      {{version}}
+	 * @version    {{version}}
+	 */
+
+	declare( strict_types=1 );
+
+	namespace {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders;
+
+	defined( 'ABSPATH' ) || die( 'Keep Silent' );
+
+	use StorePress\AdminUtils\Abstracts\AbstractServiceProvider;
+	use StorePress\AdminUtils\Traits\SingletonTrait;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Containers\Container;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Services\Blocks;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Traits\PluginUtilityTrait;
+
+	/**
+	 * Binds and boots the Blocks service.
+	 *
+	 * @name BlocksServiceProvider
+	 */
+class BlocksServiceProvider extends AbstractServiceProvider {
+
+	use SingletonTrait;
+	use PluginUtilityTrait;
+
+	// =====================================================================
+	// Service Lifecycle Methods
+	// =====================================================================
+
+	/**
+	 * Binds the Blocks service into the container.
+	 *
+	 * @return void
+	 * @since {{version}}
+	 */
+	public function register(): void {
+
+		$this->get_container()->register(
+			Blocks::class,
+			function () {
+				return Blocks::instance();
+			}
+		);
+	}
+
+	/**
+	 * Resolves and activates the Blocks service.
+	 *
+	 * @return void
+	 * @since {{version}}
+	 */
+	public function boot(): void {
+		$this->get_container()->get( Blocks::class );
+	}
+}

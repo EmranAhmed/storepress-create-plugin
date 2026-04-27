@@ -17,6 +17,7 @@
  * License:           GPL v3 or later
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
  * Domain Path:       /languages
+ * Update URI:        https://storepress.com/
  */
 
 /**
@@ -42,7 +43,7 @@ if ( ! defined( '{{constantNamespace}}_{{constantSlug}}_PLUGIN_FILE' ) ) {
 function {{namespaceSnakeCase}}_{{slugSnakeCase}}(): Plugin {
 
 	// Include the Plugin class.
-	if ( ! class_exists( '\{{pascaleNamespace}}\{{slugPascalCase}}\Plugin' ) ) {
+	if ( ! class_exists( Plugin::class ) ) {
 		require_once plugin_dir_path( __FILE__ ) . '/includes/Plugin.php';
 	}
 
@@ -51,7 +52,7 @@ function {{namespaceSnakeCase}}_{{slugSnakeCase}}(): Plugin {
 	 *
 	 * @example:
 	 * if ( function_exists( '{{namespaceSnakeCase}}_{{slugSnakeCase}}_pro' ) ) {
-	 *  return {{namespaceSnakeCase}}_{{slugSnakeCase}}_pro();
+	 *     return {{namespaceSnakeCase}}_{{slugSnakeCase}}_pro();
 	 * }
 	 */
 

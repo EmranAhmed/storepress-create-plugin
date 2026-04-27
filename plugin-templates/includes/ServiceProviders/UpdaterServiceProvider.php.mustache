@@ -1,0 +1,61 @@
+<?php
+	/**
+	 * Updater Service Provider.
+	 *
+	 * @package    {{pascaleNamespace}}/{{slugPascalCase}}
+	 * @since      {{version}}
+	 * @version    {{version}}
+	 */
+
+	declare( strict_types=1 );
+
+	namespace {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders;
+
+	defined( 'ABSPATH' ) || die( 'Keep Silent' );
+
+	use StorePress\AdminUtils\Abstracts\AbstractServiceProvider;
+	use StorePress\AdminUtils\Traits\SingletonTrait;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Integrations\Updater;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Traits\PluginUtilityTrait;
+
+	/**
+	 * Binds and boots the Updater service.
+	 *
+	 * @name UpdaterServiceProvider
+	 */
+class UpdaterServiceProvider extends AbstractServiceProvider {
+
+	use SingletonTrait;
+	use PluginUtilityTrait;
+
+
+	// =====================================================================
+	// Service Lifecycle Methods
+	// =====================================================================
+
+	/**
+	 * Binds the Updater service into the container.
+	 *
+	 * @return void
+	 * @since {{version}}
+	 */
+	public function register(): void {
+
+		$this->get_container()->register(
+			Updater::class,
+			function () {
+				return Updater::instance();
+			}
+		);
+	}
+
+	/**
+	 * Resolves and activates the Updater service.
+	 *
+	 * @return void
+	 * @since {{version}}
+	 */
+	public function boot(): void {
+		$this->get_container()->get( Updater::class );
+	}
+}

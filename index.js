@@ -75,12 +75,12 @@ module.exports = {
       'lint:md:docs': 'wp-scripts lint-md-docs',
       'lint:pkg-json': 'wp-scripts lint-pkg-json',
 
-      "packages-install:all": "./tools/packages-install.js",
-      "packages-update:storepress": "./tools/packages-update.js",
+      "packages-install:all": "node ./tools/packages-install.js",
+      "packages-update:storepress": "node ./tools/packages-update.js",
       'packages-update': 'wp-scripts packages-update && npm run packages-update:storepress && composer update && composer dump-autoload',
 
       'prepackage': 'rimraf languages ${npm_package_name}.zip && npm run language && npm run build && npm run clean-composer && composer install --no-dev --optimize-autoloader',
-      'package': './tools/package.js',
+      'package': 'node ./tools/package.js',
       'postpackage': 'npm run clean-composer && composer install',
 
       'plugin-zip': 'npm run package -- --zip',

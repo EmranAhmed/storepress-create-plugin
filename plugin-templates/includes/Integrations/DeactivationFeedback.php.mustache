@@ -1,0 +1,172 @@
+<?php
+	/**
+	 * Deactivation Feedback Integration.
+	 *
+	 * @package    {{pascaleNamespace}}/{{slugPascalCase}}
+	 * @since      {{version}}
+	 * @version    {{version}}
+	 */
+
+	namespace {{pascaleNamespace}}\{{slugPascalCase}}\Integrations;
+
+	defined( 'ABSPATH' ) || die( 'Keep Silent' );
+
+	use StorePress\AdminUtils\Abstracts\AbstractDeactivationFeedback;
+	use StorePress\AdminUtils\Traits\SingletonTrait;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Services\Settings;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Traits\PluginUtilityTrait;
+
+	/**
+	 * Handles the deactivation feedback dialog for the plugin.
+	 *
+	 * @name DeactivationFeedback
+	 */
+class DeactivationFeedback extends AbstractDeactivationFeedback {
+
+	use SingletonTrait;
+	use PluginUtilityTrait;
+
+	/**
+	 * Get deactivation title.
+	 *
+	 * @return string
+	 * @since {{version}}
+	 */
+	public function title(): string {
+		$name = $this->get_plugin_name();
+		/* translators: %s: Plugin name. */
+		return sprintf( esc_html__( 'QUICK FEEDBACK from %s', '{{textdomain}}' ), esc_html( $name ) );
+	}
+
+	/**
+	 * Returns the dialog sub-title text.
+	 *
+	 * @return string
+	 * @since {{version}}
+	 */
+	public function sub_title(): string {
+		return esc_html__( 'May we have a little info about why you are deactivating?', '{{textdomain}}' );
+	}
+
+	/**
+	 * Set API URL to send feedback.
+	 *
+	 * @return string
+	 * @since {{version}}
+	 * @example https://example.com/wp-json/__NAMESPACE__/v1/deactivate
+	 */
+	public function api_url(): string {
+		return 'https://example.com/wp-json/feedback/v1/deactivate';
+	}
+
+	/**
+	 * Get saved settings data.
+	 *
+	 * @return array<string, mixed>
+	 * @since {{version}}
+	 */
+	public function options(): array {
+		return $this->get_container()->get( Settings::class )->get_options();
+	}
+
+	/**
+	 * Returns the dialog action buttons configuration.
+	 *
+	 * @return array<int, array<string, mixed>>
+	 * @since {{version}}
+	 */
+	public function get_buttons(): array {
+
+		return array(
+			array(
+				'type'       => 'button',
+				'label'      => esc_html__( 'Send feedback &amp; Deactivate', '{{textdomain}}' ),
+				'attributes' => array(
+					'disabled'        => true,
+					'type'            => 'submit',
+					'data-action'     => 'submit',
+					'data-label'      => esc_html__( 'Send feedback &amp; Deactivate', '{{textdomain}}' ),
+					'data-processing' => esc_html__( 'Deactivate...', '{{textdomain}}' ),
+					'class'           => array( 'button', 'button-primary' ),
+				),
+				'spinner'    => true,
+			),
+			array(
+				'type'       => 'link',
+				'label'      => esc_html__( 'Skip &amp; Deactivate', '{{textdomain}}' ),
+				'attributes' => array(
+					'href'  => '#',
+					'class' => array( 'skip-deactivate' ),
+				),
+			),
+		);
+	}
+
+	/**
+	 * Returns the deactivation reason options shown in the dialog.
+	 *
+	 * @return array<string, array<string, mixed>>
+	 * @since {{version}}
+	 */
+	public function get_reasons(): array {
+		$current_user = wp_get_current_user();
+		$name         = $this->get_plugin_name();
+
+		return array(
+			'temporary_deactivation'        => array(
+				'title' => esc_html__( 'It\'s a temporary deactivation.', '{{textdomain}}' ),
+			),
+
+			'dont_know_about'               => array(
+				'title'   => esc_html__( 'I couldn\'t understand how to make it work.', '{{textdomain}}' ),
+				/* translators: %s: Plugin name. */
+				'message' => sprintf( esc_html__( 'Its Plugin %s.', '{{textdomain}}' ), esc_html( $name ) ),
+			),
+
+			'no_longer_needed'              => array(
+				'title' => esc_html__( 'I no longer need the plugin.', '{{textdomain}}' ),
+			),
+
+			'found_a_better_plugin'         => array(
+				'title' => esc_html__( 'I found a better plugin.', '{{textdomain}}' ),
+				'input' => array(
+					'placeholder' => esc_html__( 'Please let us know which one', '{{textdomain}}' ),
+				),
+			),
+
+			'broke_site_layout'             => array(
+				'title'   => __( 'The plugin <strong>broke my layout</strong> or some functionality.', '{{textdomain}}' ),
+				'message' => __( '<a target="_blank" href="https://getwooplugins.com/tickets/">Please open a support ticket</a>, we will fix it immediately.', '{{textdomain}}' ),
+			),
+
+			'plugin_setup_help'             => array(
+				'title'   => __( 'I need someone to <strong>setup this plugin.</strong>', '{{textdomain}}' ),
+				'input'   => array(
+					'placeholder' => esc_html__( 'Your email address.', '{{textdomain}}' ),
+					'value'       => sanitize_email( $current_user->user_email ),
+				),
+				'message' => __( 'Please provide your email address to contact with you <br>and help you to set up and configure this plugin.', '{{textdomain}}' ),
+			),
+
+			'plugin_config_too_complicated' => array(
+				'title'   => __( 'The plugin is <strong>too complicated to configure.</strong>', '{{textdomain}}' ),
+				'message' => __( '<a target="_blank" href="https://getwooplugins.com/documentation/woocommerce-variation-swatches/">Have you checked our documentation?</a>.', '{{textdomain}}' ),
+			),
+
+			'need_specific_feature'         => array(
+				'title' => esc_html__( 'I need specific feature that you don\'t support.', '{{textdomain}}' ),
+
+				'input' => array(
+					'placeholder' => esc_html__( 'Please share with us.', '{{textdomain}}' ),
+				),
+			),
+
+			'other'                         => array(
+				'title' => esc_html__( 'Other', '{{textdomain}}' ),
+				'input' => array(
+					'placeholder' => esc_html__( 'Please share the reason', '{{textdomain}}' ),
+				),
+			),
+		);
+	}
+}
