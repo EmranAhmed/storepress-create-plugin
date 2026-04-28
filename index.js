@@ -110,6 +110,7 @@ module.exports = {
       'clsx',
     ],
     npmDevDependencies: [
+      '@wordpress/eslint-plugin',
       '@wordpress/babel-preset-default',
       '@testing-library/jest-dom',
       '@testing-library/react',
