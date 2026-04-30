@@ -119,8 +119,6 @@ module.exports = {
       'identity-obj-proxy',
       '@wordpress/scripts',
       '@wordpress/blocks',
-      '@woocommerce/dependency-extraction-webpack-plugin',
-      '@woocommerce/eslint-plugin',
       '@wordpress/base-styles',
       '@wordpress/dependency-extraction-webpack-plugin',
       '@wordpress/i18n',

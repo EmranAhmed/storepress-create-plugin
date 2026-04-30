@@ -49,7 +49,7 @@ class Blocks {
 		 *
 		 * @since {{version}}
 		 */
-		do_action( '{{slug}}_blocks_loaded', $this );
+		do_action( '{{namespace}}_{{slug}}_blocks_loaded', $this );
 	}
 
 	/**
@@ -124,8 +124,8 @@ class Blocks {
 		}
 		$editor_script_asset = include $editor_script_asset_file;
 
-		wp_enqueue_script( '{{slug}}-editor-scripts', $editor_script_src_url, $editor_script_asset['dependencies'], $editor_script_asset['version'], array( 'strategy' => 'defer' ) );
-		wp_set_script_translations( '{{slug}}-editor-scripts', '{{textdomain}}', $this->languages_path() );
+		wp_enqueue_script( '{{namespace}}-{{slug}}-editor-scripts', $editor_script_src_url, $editor_script_asset['dependencies'], $editor_script_asset['version'], array( 'strategy' => 'defer' ) );
+		wp_set_script_translations( '{{namespace}}-{{slug}}-editor-scripts'', '{{textdomain}}', $this->languages_path() );
 	}
 
 	/**
@@ -143,8 +143,8 @@ class Blocks {
 		}
 		$asset = include $asset_file;
 
-		wp_register_style( 'storepress-base-plugin-style', $css_file_url, array(), $asset['version'] );
-		wp_register_script( 'storepress-base-plugin-script', $js_file_url, $asset['dependencies'], $asset['version'], array( 'strategy' => 'defer' ) );
+		wp_register_style( '{{namespace}}-{{slug}}-style', $css_file_url, array(), $asset['version'] );
+		wp_register_script( '{{namespace}}-{{slug}}-script', $js_file_url, $asset['dependencies'], $asset['version'], array( 'strategy' => 'defer' ) );
 	}
 
 	/**

@@ -1,23 +1,19 @@
 # @storepress/create-plugin
 
-This is a template for [`@wordpress/create-block`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-create-block/) to create StorePress Plugin.
+This is a template for [`@wordpress/create-block`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-create-block/) Scaffolding StorePress Plugin.
 
 ## Usage
 
 This template can be used by running the following command:
 
 ```bash
-npx @wordpress/create-block@latest my-extension-name --template @storepress/create-plugin --target-dir .
+npx @wordpress/create-block@latest extension-name --namespace=storepress --template @storepress/create-plugin --target-dir .
 ```
 
 Navigate to the newly created folder and get started.
 
 ```bash
 cd my-extension-name
-chmod +x ./tools/package.js                         # Make Package JS Executable.
-chmod +x ./tools/changelog.js                       # Make Changelog JS Executable.
-chmod +x ./tools/packages-install.js                # Make Package Install JS Executable.
-chmod +x ./tools/packages-update.js.js              # Make Package Update JS Executable.
 npm i                                               # Install dependencies
 npm start                                           # Start developing
 npx @wp-now/wp-now start                            # Start Wordpress environment
