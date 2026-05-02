@@ -33,7 +33,8 @@ Please check [Base Plugin](https://github.com/EmranAhmed/storepress-base-plugin/
 
 ## Fix
 
-- `npm run lint:js:fix` - Fix Javascript Lint Issue.
+- `npm run lint:php:fix` - Fix PHP Lint Issue.
+- `npm run lint:js:fix` - Fix JavaScript Lint Issue.
 - `npm run lint:css:fix` - Fix SCSS Lint Issue.
 
 ## Stan
@@ -48,6 +49,13 @@ Please check [Base Plugin](https://github.com/EmranAhmed/storepress-base-plugin/
 - `npm run format:php` - Format PHP
 - `npm run format` - Format `./src`
 
+## Test
+
+- [How to add automated unit tests to your WordPress plugin](https://developer.wordpress.org/news/2025/12/how-to-add-automated-unit-tests-to-your-wordpress-plugin/)
+- `npm run test:unit` - JS Unit test
+- `npm run test:e2e` - E2E test
+- `npm run test:php` - PHP Unit test
+
 ## Release
 
 - `npm run plugin-zip` - make zip based on `package.json` `files` list.
@@ -55,8 +63,8 @@ Please check [Base Plugin](https://github.com/EmranAhmed/storepress-base-plugin/
 
 ## Release to GitHub.com
 
-- `PKG_VERSION=$(node -p "require('./composer.json').version") && git tag $PKG_VERSION && git push origin "$_"` - Publish Tag
-- `PKG_VERSION=$(node -p "require('./composer.json').version") && git tag -d $PKG_VERSION && git push origin --delete "$_"` - Delete Tag
+- `git tag $(node -p "require('./package.json').version") && git push origin "$_"` Publish Tag
+- `git tag -d $(node -p "require('./package.json').version") && git push origin --delete "$_"` - Delete Tag
 
 ## Provide your own translations
 
