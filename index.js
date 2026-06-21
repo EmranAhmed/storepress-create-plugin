@@ -3,25 +3,97 @@
  */
 const { join } = require('path')
 
-// two-words
+/**
+ * Converts a string to kebab-case by replacing separators (hyphens, dots,
+ * underscores, spaces, and plus signs) with hyphens and lowercasing.
+ *
+ * @param {string} input - The string to convert.
+ * @returns {string} The kebab-cased string (e.g. "my-plugin-name").
+ *
+ * @example
+ * kebabCase('My Plugin Name') // => 'my-plugin-name'
+ * kebabCase('my_plugin.name') // => 'my-plugin-name'
+ */
 function kebabCase (input) {
   const regex = /[-._\s+]/gi
   return input.replace(regex, '-').toLowerCase()
 }
 
+/**
+ * Converts a string to snake_case by replacing separators (hyphens, dots,
+ * underscores, spaces, and plus signs) with underscores and lowercasing.
+ *
+ * @param {string} input - The string to convert.
+ * @returns {string} The snake_cased string (e.g. "my_plugin_name").
+ *
+ * @example
+ * snakeCase('My Plugin Name') // => 'my_plugin_name'
+ * snakeCase('my-plugin.name') // => 'my_plugin_name'
+ */
+function snakeCase(input) {
+  const regex = /[-._\s+]/gi
+  return input.replace(regex, '_').toLowerCase()
+}
+
+/**
+ * Converts a string to CONSTANT_CASE by replacing separators (hyphens, dots,
+ * underscores, spaces, and plus signs) with underscores and uppercasing.
+ *
+ * @param {string} input - The string to convert.
+ * @returns {string} The constant-cased string (e.g. "MY_PLUGIN_NAME").
+ *
+ * @example
+ * constantCase('my-plugin-name') // => 'MY_PLUGIN_NAME'
+ * constantCase('my plugin.name') // => 'MY_PLUGIN_NAME'
+ */
 function constantCase (input) {
   const regex = /[-._\s+]/gi
   return input.replace(regex, '_').toUpperCase()
 }
 
+/**
+ * Maps the literal string `"storepress"` to its branded casing `"StorePress"`,
+ * leaving all other inputs unchanged.
+ *
+ * @param {string} input - The string to check.
+ * @returns {string} `"StorePress"` if input is `"storepress"`, otherwise the original input.
+ *
+ * @example
+ * pascalStorePress('storepress') // => 'StorePress'
+ * pascalStorePress('myplugin')   // => 'myplugin'
+ */
 function pascalStorePress (input) {
   return 'storepress' === input ? 'StorePress' : input
 }
 
+/**
+ * Converts a string to PascalCase by extracting alphanumeric words and
+ * capitalising the first letter of each.
+ *
+ * @param {string} input - The string to convert.
+ * @returns {string} The PascalCased string (e.g. "MyPluginName").
+ *
+ * @example
+ * pascalCase('my-plugin-name') // => 'MyPluginName'
+ * pascalCase('my plugin name') // => 'MyPluginName'
+ */
 function pascalCase (input) {
   return (input.match(/[a-zA-Z0-9]+/g) || []).map(w => `${w.charAt(0).toUpperCase()}${w.slice(1)}`).join('')
 }
 
+/**
+ * Configuration object for the `@wordpress/create-block` scaffolding tool.
+ *
+ * Provides default values, custom npm scripts, dependency lists, package.json
+ * overrides, a view transformer, and resolved template directory paths used
+ * when generating a new StorePress WordPress plugin or block.
+ *
+ * @type {{
+ *   defaultValues: Object,
+ *   pluginTemplatesPath: string,
+ *   blockTemplatesPath: string,
+ * }}
+ */
 module.exports = {
   defaultValues: {
     wpScripts: false,
@@ -167,24 +239,52 @@ module.exports = {
         'wpml-config.xml',
       ]
     },
+    /**
+     * Transforms the raw `@wordpress/create-block` view object by deriving
+     * additional casing variants for the namespace and slug, injecting today's
+     * date, and exposing GitHub Actions expression placeholders used in
+     * workflow templates.
+     *
+     * @param {Object} view                - The view data provided by `@wordpress/create-block`.
+     * @param {string} view.namespace      - The plugin namespace (e.g. `"storepress"`).
+     * @param {string} view.slug           - The plugin slug (e.g. `"my-plugin"`).
+     * @returns {Object} The extended view object with the following additional properties:
+     *   - `{string} todayDate`               - ISO date string for today (YYYY-MM-DD).
+     *   - `{string} constantNamespace`        - Namespace in CONSTANT_CASE.
+     *   - `{string} kebabNamespace`           - Namespace in kebab-case.
+     *   - `{string} pascaleNamespace`         - Namespace in PascalCase (with StorePress branding).
+     *   - `{string} constantSlug`             - Slug in CONSTANT_CASE.
+     *   - `{string} kebabSlug`                - Slug in kebab-case.
+     *   - `{string} pascaleSlug`              - Slug in PascalCase (with StorePress branding).
+     *   - `{string} GITHUB_REPOSITORY_NAME`  - GitHub Actions expression for the repository name.
+     *   - `{string} GITHUB_RELEASE_NAME`      - GitHub Actions expression for the release name.
+     *   - `{string} GITHUB_RELEASE_TAG`       - GitHub Actions expression for the release tag.
+     *   - `{string} GITHUB_CHANGELOG_CONTENT` - GitHub Actions expression for changelog content.
+     *   - `{string} GITHUB_TOKEN`             - GitHub Actions expression for the GitHub token.
+     */
     transformer: (view) => {
       const todayDate = new Date().toJSON().slice(0, 10)
       const pascaleNamespace = pascalCase(pascalStorePress(view.namespace))
       const constantNamespace = constantCase(view.namespace)
       const kebabNamespace = kebabCase(view.namespace)
-      const constantSlug = constantCase(view.slug) // TWO_WORDS
-      const kebabSlug = kebabCase(view.slug) // two-words
-      const pascaleSlug = pascalCase(pascalStorePress(view.slug)) // 'TwoWords'
+      const constantSlug = constantCase(view.slug)
+      const kebabSlug = kebabCase(view.slug)
+      const pascaleSlug = pascalCase(pascalStorePress(view.slug))
+      const snakeNamespace = snakeCase(view.namespace)
+      const snakeSlug = snakeCase(view.slug)
+
       return {
         ...view,
         todayDate: todayDate,
         constantNamespace: constantNamespace,
         kebabNamespace: kebabNamespace,
         pascaleNamespace: pascaleNamespace,
+        snakeNamespace: snakeNamespace,
 
         constantSlug: constantSlug,
         kebabSlug: kebabSlug,
         pascaleSlug: pascaleSlug,
+        snakeSlug: snakeSlug,
 
         GITHUB_REPOSITORY_NAME: "${{ github.event.repository.name }}",
         GITHUB_RELEASE_NAME: "${{ env.RELEASE_NAME }}",

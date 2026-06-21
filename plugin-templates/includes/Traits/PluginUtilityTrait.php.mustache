@@ -11,7 +11,7 @@
 
 	defined( 'ABSPATH' ) || die( 'Keep Silent' );
 
-    use StorePress\AdminUtils\Traits\HelperMethodsTrait;
+	use StorePress\AdminUtils\Traits\HelperMethodsTrait;
 	use StorePress\AdminUtils\Traits\PluginCommonTrait;
 	use {{pascaleNamespace}}\{{slugPascalCase}}\Containers\Container;
 	use {{pascaleNamespace}}\{{slugPascalCase}}\Services\Settings;
@@ -19,10 +19,10 @@
 	use function {{pascaleNamespace}}\{{slugPascalCase}}\get_container;
 
 	/**
-     * Provides plugin file path, DI container, settings, and logging utilities.
-     *
-     * @name PluginUtilityTrait
-     */
+	 * Provides plugin file path, DI container, settings, and logging utilities.
+	 *
+	 * @name PluginUtilityTrait
+	 */
 trait PluginUtilityTrait {
 
 	use PluginCommonTrait;
@@ -53,30 +53,30 @@ trait PluginUtilityTrait {
 	public function get_container(): Container {
 		return get_container();
 	}
-    
-    /**
-     * Returns the plugin settings service.
-     *
-     * @return Settings
-     * @since  {{version}}
-     * @see    get_container()
-     */
-    public function get_settings(): Settings {
-        return $this->get_container()->get( Settings::class );
-    }
-    
-    // =====================================================================
-    // Logging
-    // =====================================================================
-    
-    /**
-     * Whether logging is enabled via plugin settings.
-     *
-     * @return bool
-     * @since  {{version}}
-     * @see    get_settings()
-     */
-    public function is_log_enabled(): bool {
-        return $this->string_to_boolean( $this->get_settings()->get_option( 'is_log_enabled', 'no' ) );
-    }
+
+	/**
+	 * Returns the plugin settings service.
+	 *
+	 * @return Settings
+	 * @since  {{version}}
+	 * @see    get_container()
+	 */
+	public function get_settings(): Settings {
+		return $this->get_container()->get( Settings::class );
+	}
+
+	// =====================================================================
+	// Logging
+	// =====================================================================
+
+	/**
+	 * Whether logging is enabled via plugin settings.
+	 *
+	 * @return bool
+	 * @since  {{version}}
+	 * @see    get_settings()
+	 */
+	public function is_log_enabled(): bool {
+		return $this->string_to_boolean( $this->get_settings()->get_option( 'is_log_enabled', 'no' ) );
+	}
 }

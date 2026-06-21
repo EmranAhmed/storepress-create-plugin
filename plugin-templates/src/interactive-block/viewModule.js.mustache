@@ -14,7 +14,7 @@ store('{{namespace}}', {
 		logIsOpen: () => {
 			const { isOpen } = getContext();
 			// Log the value of `isOpen` each time it changes.
-			console.log(`Is open: ${isOpen}`);
+			window.console.log(`Is open: ${isOpen}`);
 		},
 	},
 });

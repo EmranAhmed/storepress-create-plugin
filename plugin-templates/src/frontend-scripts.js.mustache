@@ -1,96 +1,94 @@
+'use strict';
+/**
+ * WordPress dependencies
+ */
+import domReady from '@wordpress/dom-ready';
+
 /**
  * External dependencies
  */
-import domReady from '@wordpress/dom-ready'
-import { createPluginInstance, triggerEvent, getPluginInstance } from '@storepress/utils'
+import { createPluginInstance } from '@storepress/utils';
 
 /**
  * Internal dependencies
  */
-import './frontend.scss'
+
+import { Plugin } from './plugins/Plugin';
 
 // Please check: https://emranahmed.github.io/storepress-packages/?path=/docs/utils-plugin-example--docs
-/**
- * Internal dependencies
- */
-import { Plugin as Instance } from '@utils'
 
-export default function {{pascaleSlug}}Plugin(){
-  const Plugin = {
-    createInstance (element, options) {
-      return createPluginInstance(element, options, Instance)
-    },
+domReady( function () {
+	// Attach with window to access Slider globally.
+	const Slider = {
+		getInstance( element, options ) {
+			return createPluginInstance( element, options, Plugin );
+		},
 
-    getInstance (element) {
-      return getPluginInstance(element)
-    },
+		initWith( el, options ) {
+			const instance = this.getInstance( el, options );
 
-    init ($selector, options) {
-      for (const { element, reset } of this.createInstance($selector, options)) {
-        element.addEventListener('destroy', reset)
-      }
-    },
+			for ( const { element, removeEvents } of instance ) {
+				element.addEventListener( 'destroy', removeEvents );
+			}
+		},
 
-    destroy ($selector) {
-      for (const { destroy } of this.getInstance($selector)) {
-        destroy()
-      }
-    },
+		init( options ) {
+			const instance = this.getInstance( '.inp', options );
+			for ( const { element, removeEvents } of instance ) {
+				element.addEventListener( 'destroy', removeEvents );
+			}
+		},
 
-    reload ($selector, options) {
-      this.destroy($selector)
-      this.init($selector, options)
-    },
-  }
+		destroyWith( el ) {
+			for ( const { destroy } of this.getInstance( el ) ) {
+				destroy();
+			}
+		},
 
-  document.addEventListener('storepress_plugin_init', (event) => {
+		destroy() {
+			for ( const { destroy } of this.getInstance( '.inp' ) ) {
+				destroy();
+			}
+		},
+	};
 
-    const defaultSettings = {}
-    const settings = { ...defaultSettings, ...event.detail?.settings }
-    const element = event.detail?.element
+	// Slider.init()
+	// Slider.destroy()
 
-    if (Array.isArray(element)) {
-      for (const el of element) {
-        Plugin.init(el, settings)
-      }
-    } else {
-      Plugin.init(element, settings)
-    }
-  }, { passive: true })
+	//////
 
-  document.addEventListener('storepress_plugin_destroy', (event) => {
+	// If you do not want to attach Slider to window. use event.
+	document.addEventListener( 'slider_init_with_options', ( event ) => {
+		const defaultSettings = { pointerSize: 30 };
+		const settings = { ...defaultSettings, ...event.detail?.settings };
 
-    const element = event.detail?.element
+		Slider.init( settings );
+	} );
 
-    if (Array.isArray(element)) {
-      for (const el of element) {
-        Plugin.destroy(el)
-      }
-    } else {
-      Plugin.destroy(element)
-    }
+	/*
+	const slider_init_with_options = new CustomEvent(
+		'slider_init_with_options',
+		{
+			detail: {
+				settings: {
+					pointerSize: 80,
+				},
+			},
+		}
+	);
+	*/
 
-  }, { passive: true })
+	// document.dispatchEvent(slider_init_with_options)
 
-  document.addEventListener('storepress_plugin_reload', (event) => {
-    const defaultSettings = {}
-    const settings = { ...defaultSettings, ...event.detail?.settings }
-    const element = event.detail?.element
+	document.addEventListener( 'slider_init', () => {
+		Slider.init();
+	} );
 
-    if (Array.isArray(element)) {
-      for (const el of element) {
-        Plugin.reload(el, settings)
-      }
-    } else {
-      Plugin.reload(element, settings)
-    }
-  }, { passive: true })
-}
+	document.dispatchEvent( new Event( 'slider_init' ) );
 
-domReady(function () {
-  {{pascaleSlug}}Plugin()
-  triggerEvent(document, 'storepress_plugin_init', {
-    element: ['[data-plugin-settings]'],
-    settings: {},
-  })
-})
+	document.addEventListener( 'slider_destroy', () => {
+		Slider.destroy();
+	} );
+
+	// document.dispatchEvent(new Event('slider_destroy')) //  run when you want to destroy slider instances
+} );
