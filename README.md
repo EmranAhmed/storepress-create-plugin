@@ -7,7 +7,7 @@ This is a template for [`@wordpress/create-block`](https://developer.wordpress.o
 This template can be used by running the following command:
 
 ```bash
-npx @wordpress/create-block@latest extension-name --namespace=storepress --template @storepress/create-plugin --target-dir .
+npx -y @wordpress/create-block@latest --namespace=storepress --template @storepress/create-plugin example-extension-name && cd "$_"
 ```
 
 Navigate to the newly created folder and get started.
@@ -24,7 +24,7 @@ npx @wp-now/wp-now start                            # Start Wordpress environmen
 For development on this tool itself, you can also install from a local directory.
 
 ```bash
-npx @wordpress/create-block@latest example-extension-name --template ./create-plugin 
+npx -y @wordpress/create-block@latest --template ./create-plugin example-extension-name && cd "$_" 
 ```
 
 ### Add Tests
