@@ -16,7 +16,7 @@ Navigate to the newly created folder and get started.
 cd my-extension-name
 npm i                                               # Install dependencies
 npm start                                           # Start developing
-npx @wp-now/wp-now start                            # Start Wordpress environment
+npx -y @wp-playground/cli@latest start              # Start Wordpress environment
 ```
 
 ## Development
