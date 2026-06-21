@@ -20,6 +20,7 @@
 	use {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders\SettingsServiceProvider;
 	use {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders\DeactivationServiceProvider;
 	use {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders\UpdaterServiceProvider;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Containers\Container;
 
 	/**
 	 * Class Plugin.
@@ -102,7 +103,17 @@ class Plugin {
 	 * @since {{version}}
 	 */
 	public function get_plugin_file(): string {
-		return constant( '{{constantNamespace}}_{{constantSlug}}_PLUGIN_FILE' );
+		return get_plugin_file();
+	}
+
+	/**
+	 * Get container.
+	 *
+	 * @return Container
+	 * @since {{version}}
+	 */
+	public function get_container(): Container {
+		return get_container();
 	}
 
 	/**

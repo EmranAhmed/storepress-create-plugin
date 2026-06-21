@@ -53,7 +53,7 @@ class Updater extends AbstractUpdater {
 	 * @since {{version}}
 	 */
 	public function update_server_path(): string {
-		return '/storepress-admin-utils/wp-json/plugin-updater/v1/check-update';
+		return '/wp-json/plugins/v1/check-update';
 	}
 
 	/**
@@ -94,6 +94,6 @@ class Updater extends AbstractUpdater {
 	 * @since {{version}}
 	 */
 	public function additional_request_args(): array {
-		return array( 'domain' => $this->get_client_hostname() );
+		return array( 'additional_key' => 'additional_value );
 	}
 }

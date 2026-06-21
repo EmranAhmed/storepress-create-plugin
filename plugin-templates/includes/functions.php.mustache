@@ -15,6 +15,7 @@
 
 	use {{pascaleNamespace}}\{{slugPascalCase}}\Containers\Container;
 	use {{pascaleNamespace}}\{{slugPascalCase}}\Services\Blocks;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Services\Settings;
 
 	/**
 	 * Returns the plugin service container instance.
@@ -60,4 +61,14 @@ function get_pro_plugin_file(): string {
 	}
 
 	return '{{slug}}-pro/{{slug}}-pro.php';
+}
+
+	/**
+	 * Get Settings.
+	 *
+	 * @return Settings
+	 * @since {{version}}
+	 */
+function get_settings(): Settings {
+	return get_container()->get( Settings::class );
 }

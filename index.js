@@ -42,7 +42,7 @@ module.exports = {
     },
     license: 'GPL-2.0-or-later',
     customScripts: {
-      "wp-plugin-check": "npx gitget WordPress/plugin-check/phpcs-sniffs wp-plugin-check/plugin-check/phpcs-sniffs",
+      "wp-plugin-check": "(node -e \"process.exit(require('fs').existsSync('wp-plugin-check') ? 1 : 0)\" && npx gitget WordPress/plugin-check/phpcs-sniffs wp-plugin-check/plugin-check/phpcs-sniffs) || echo \"> Skipping wp-plugin-check download\"",
       'clean-composer': 'rimraf vendor',
       "postinstall": "npm run wp-plugin-check && npm run packages-install:all && git init -q && rimraf .husky && npm run clean-composer && composer install && npx husky init && echo \"npx lint-staged\" > .husky/pre-commit",
       'stan:php': 'composer run phpstan',
@@ -92,7 +92,7 @@ module.exports = {
 
       'language': 'npm run language:make-pot && npm run language:make-json',
       "language:make-pot": "WP_CLI_PHP_ARGS='-d memory_limit=2048M' ./vendor/bin/wp i18n make-pot . languages/${npm_package_name}.pot --slug=$npm_package_name --domain=$npm_package_name --exclude=tools,node_modules,vendor,languages --package-name=\"StorePress Plugin\"",
-      "language:make-json": "WP_CLI_PHP_ARGS='-d memory_limit=2048M' ./vendor/bin/wp i18n make-json languages --no-purge --pretty-print",
+      "language:make-json": "WP_CLI_PHP_ARGS='-d memory_limit=2048M' ./vendor/bin/wp i18n make-json languages --pretty-print",
 
       'create-dynamic-block': 'npx @wordpress/create-block@latest --namespace storepress --variant dynamic --no-plugin',
       'create-static-block': 'npx @wordpress/create-block@latest --namespace storepress --no-plugin',
