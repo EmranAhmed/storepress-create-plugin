@@ -198,7 +198,7 @@ module.exports = {
       'lint-staged',
       'fs-extra',
       'webpack-remove-empty-scripts',
-      'eslint-plugin-prettier@',
+      'eslint-plugin-prettier',
       'eslint-formatter-pretty',
       'rimraf',
       'prettier'
