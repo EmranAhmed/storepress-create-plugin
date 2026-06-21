@@ -128,7 +128,7 @@ class Blocks {
 		$editor_script_asset = include $editor_script_asset_file;
 
 		wp_enqueue_script( '{{namespace}}-{{slug}}-editor-scripts', $editor_script_src_url, $editor_script_asset['dependencies'], $editor_script_asset['version'], array( 'strategy' => 'defer' ) );
-		wp_set_script_translations( '{{namespace}}-{{slug}}-editor-scripts'', '{{textdomain}}', $this->languages_path() );
+		wp_set_script_translations( '{{namespace}}-{{slug}}-editor-scripts', '{{textdomain}}', $this->languages_path() );
 	}
 
 	/**
