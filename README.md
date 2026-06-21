@@ -14,7 +14,7 @@ Navigate to the newly created folder and get started.
 
 ```bash
 cd my-extension-name
-npm i                                               # Install dependencies
+npm i && npm run packages-update                    # Install dependencies and update
 npm start                                           # Start developing
 npx -y @wp-playground/cli@latest start              # Start Wordpress environment
 ```
