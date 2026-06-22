@@ -7,6 +7,8 @@
 	 * @version    {{version}}
 	 */
 
+	declare( strict_types=1 );
+
 	namespace {{pascaleNamespace}}\{{slugPascalCase}}\Integrations;
 
 	defined( 'ABSPATH' ) || die( 'Keep Silent' );
@@ -56,7 +58,7 @@ class DeactivationFeedback extends AbstractDeactivationFeedback {
 	 * @example https://example.com/wp-json/__NAMESPACE__/v1/deactivate
 	 */
 	public function api_url(): string {
-		return 'https://example.com/wp-json/feedback/v1/deactivate';
+		return 'https://stats.storepress.com/wp-json/storepress/v1/deactivations';
 	}
 
 	/**
@@ -136,7 +138,7 @@ class DeactivationFeedback extends AbstractDeactivationFeedback {
 
 			'broke_site_layout'             => array(
 				'title'   => __( 'The plugin <strong>broke my layout</strong> or some functionality.', '{{textdomain}}' ),
-				'message' => __( '<a target="_blank" href="https://getwooplugins.com/tickets/">Please open a support ticket</a>, we will fix it immediately.', '{{textdomain}}' ),
+				'message' => __( '<a target="_blank" href="https://storepress.com/tickets/">Please open a support ticket</a>, we will fix it immediately.', '{{textdomain}}' ),
 			),
 
 			'plugin_setup_help'             => array(
@@ -150,7 +152,7 @@ class DeactivationFeedback extends AbstractDeactivationFeedback {
 
 			'plugin_config_too_complicated' => array(
 				'title'   => __( 'The plugin is <strong>too complicated to configure.</strong>', '{{textdomain}}' ),
-				'message' => __( '<a target="_blank" href="https://getwooplugins.com/documentation/woocommerce-variation-swatches/">Have you checked our documentation?</a>.', '{{textdomain}}' ),
+				'message' => __( '<a target="_blank" href="https://storepress.com/documentation/woocommerce-variation-swatches/">Have you checked our documentation?</a>.', '{{textdomain}}' ),
 			),
 
 			'need_specific_feature'         => array(

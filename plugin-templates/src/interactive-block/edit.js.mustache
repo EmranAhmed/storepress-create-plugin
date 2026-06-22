@@ -1,5 +1,5 @@
 /**
- * External dependencies
+ * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
@@ -13,18 +13,23 @@ import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
  * @param {Object}   props               Properties passed to the function.
  * @param {Object}   props.attributes    Available block attributes.
  * @param {Function} props.setAttributes Function that updates individual attributes.
- * @param {String}   props.clientId      Block editor client id.
+ * @param {string}   props.clientId      Block editor client id.
  *
  * @return {Element} Element to render.
  */
 export default function Edit( { attributes, setAttributes, clientId } ) {
 	const blockProps = useBlockProps();
 	const innerBlockProps = useInnerBlocksProps();
-	
+
 	return (
 		<div { ...blockProps }>
-		    <h1>{ __( '{{title}} – interactive block edit.js!', '{{textdomain}}' ) }</h1>
-		    <div {...innerBlockProps} />
+			<h1>
+				{ __(
+					'Example Extension Name – interactive block edit.js!',
+					'example-extension-name'
+				) }
+			</h1>
+			<div { ...innerBlockProps } />
 		</div>
 	);
 }

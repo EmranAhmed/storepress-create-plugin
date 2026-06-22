@@ -98,7 +98,7 @@ function getRootFile (fileName) {
 
 function getWebPackAlias() {
 	return {
-		// '@utils': getFile('utils/Plugin'), // Add @utils on .eslintrc.js -> 'import/core-modules'
+		'@plugins': getFile('plugins/Plugin'), // Add "@plugins": [ "src/plugins/Plugin" ] on jsconfig.json
 		//'@storepress/icons': getFile('packages/icons'),
 		//'@storepress/utils': getFile('packages/utils'),
 		//'@storepress/components': getFile('packages/components'),

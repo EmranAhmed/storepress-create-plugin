@@ -7,6 +7,8 @@
 	 * @version    {{version}}
 	 */
 
+	declare( strict_types=1 );
+
 	namespace {{pascaleNamespace}}\{{slugPascalCase}}\Integrations;
 
 	defined( 'ABSPATH' ) || die( 'Keep Silent' );
@@ -30,7 +32,7 @@ class AdminPage extends AbstractSettings {
 	 * @since {{version}}
 	 */
 	public function get_menu_title(): string {
-		return 'StorePress';
+		return esc_html__( 'StorePress', '{{textdomain}}' );
 	}
 
 	/**
@@ -40,7 +42,11 @@ class AdminPage extends AbstractSettings {
 	 * @since {{version}}
 	 */
 	public function get_page_title(): string {
-		return sprintf( '%s - Settings', $this->get_plugin_name() );
+		return sprintf(
+			/* translators: %s: Plugin name. */
+			esc_html__( '%s - Settings', '{{textdomain}}' ),
+			$this->get_plugin_name()
+		);
 	}
 
 	/**
@@ -60,7 +66,7 @@ class AdminPage extends AbstractSettings {
 	 * @since {{version}}
 	 */
 	public function settings_id(): string {
-		return '{{slug}}-settings';
+		return sprintf( '%s_settings', str_ireplace( '-', '_', $this->get_plugin_slug() ) );
 	}
 
 	/**
@@ -82,15 +88,15 @@ class AdminPage extends AbstractSettings {
 	 */
 	public function localize_strings(): array {
 		return array(
-			'unsaved_warning_text'            => 'The changes you made will be lost if you navigate away from this page.',
-			'reset_warning_text'              => 'Are you sure to reset?',
-			'reset_button_text'               => 'Reset All',
-			'settings_link_text'              => 'Settings',
-			'settings_error_message_text'     => 'Settings not saved',
-			'settings_updated_message_text'   => 'Settings Saved',
-			'settings_deleted_message_text'   => 'Settings Reset',
-			'settings_tab_not_available_text' => 'Settings Tab is not available.',
-			'method_called_before_init'       => 'This method should not be called before init.',
+			'unsaved_warning_text'            => esc_html__( 'The changes you made will be lost if you navigate away from this page.', '{{textdomain}}' ),
+			'reset_warning_text'              => esc_html__( 'Are you sure to reset?', '{{textdomain}}' ),
+			'reset_button_text'               => esc_html__( 'Reset All', '{{textdomain}}' ),
+			'settings_link_text'              => esc_html__( 'Settings', '{{textdomain}}' ),
+			'settings_error_message_text'     => esc_html__( 'Settings not saved', '{{textdomain}}' ),
+			'settings_updated_message_text'   => esc_html__( 'Settings Saved', '{{textdomain}}' ),
+			'settings_deleted_message_text'   => esc_html__( 'Settings Reset', '{{textdomain}}' ),
+			'settings_tab_not_available_text' => esc_html__( 'Settings Tab is not available.', '{{textdomain}}' ),
+			'method_called_before_init'       => esc_html__( 'This method should not be called before init.', '{{textdomain}}' ),
 		);
 	}
 }

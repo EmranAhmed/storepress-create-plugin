@@ -13,10 +13,10 @@ npx -y @wordpress/create-block@latest --namespace=storepress --template @storepr
 Navigate to the newly created folder and get started.
 
 ```bash
-cd my-extension-name
-npm i && npm run packages-update                    # Install dependencies and update
-npm start                                           # Start developing
-npx -y @wp-playground/cli@latest start              # Start Wordpress environment
+cd example-extension-name
+npm i && npm run packages-update     # Install dependencies and update
+npm start                            # Start developing
+npx @wp-now/wp-now start             # Start Wordpress environment
 ```
 
 ## Development

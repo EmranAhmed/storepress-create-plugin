@@ -1,0 +1,62 @@
+<?php
+	/**
+	 * Additional Admin Menu Service Provider.
+	 *
+	 * @package    {{pascaleNamespace}}/{{slugPascalCase}}
+	 * @since      {{version}}
+	 * @version    {{version}}
+	 */
+
+	declare( strict_types=1 );
+
+	namespace {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders;
+
+	defined( 'ABSPATH' ) || die( 'Keep Silent' );
+
+	use StorePress\AdminUtils\Abstracts\AbstractServiceProvider;
+	use StorePress\AdminUtils\Traits\SingletonTrait;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Integrations\AdditionalAdminMenu;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Traits\PluginUtilityTrait;
+
+	/**
+	 * Registers and boots the AdditionalAdminMenu service.
+	 *
+	 * @name AdditionalAdminMenuServiceProvider
+	 */
+class AdditionalAdminMenuServiceProvider extends AbstractServiceProvider {
+
+	use SingletonTrait;
+	use PluginUtilityTrait;
+
+	// =====================================================================
+	// Service Lifecycle Methods
+	// =====================================================================
+
+	/**
+	 * Binds AdditionalAdminMenu into the container.
+	 *
+	 * @return void
+	 * @since  {{version}}
+	 * @see    boot()
+	 */
+	public function register(): void {
+
+		$this->get_container()->register(
+			AdditionalAdminMenu::class,
+			function () {
+				return AdditionalAdminMenu::instance();
+			}
+		);
+	}
+
+	/**
+	 * Resolves and activates the AdditionalAdminMenu service.
+	 *
+	 * @return void
+	 * @since  {{version}}
+	 * @see    register()
+	 */
+	public function boot(): void {
+		$this->get_container()->get( AdditionalAdminMenu::class );
+	}
+}

@@ -20,6 +20,7 @@
 	use {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders\SettingsServiceProvider;
 	use {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders\DeactivationServiceProvider;
 	use {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders\UpdaterServiceProvider;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders\AdditionalAdminMenuServiceProvider;
 	use {{pascaleNamespace}}\{{slugPascalCase}}\Containers\Container;
 
 	/**
@@ -66,13 +67,13 @@ class Plugin {
 	 * @since {{version}}
 	 */
 	public function includes(): void {
+
+		require_once __DIR__ . '/functions.php';
 		$vendor_path = untrailingslashit( plugin_dir_path( $this->get_plugin_file() ) ) . '/vendor';
 
 		if ( file_exists( $vendor_path . '/autoload_packages.php' ) ) {
 			require_once $vendor_path . '/autoload_packages.php';
 		}
-
-		require_once __DIR__ . '/functions.php';
 	}
 
 	/**
@@ -124,11 +125,12 @@ class Plugin {
 	 */
 	public function get_service_providers(): array {
 		return array(
-			UpdaterServiceProvider::class          => UpdaterServiceProvider::class,
-			DeactivationServiceProvider::class     => DeactivationServiceProvider::class,
-			SettingsServiceProvider::class         => SettingsServiceProvider::class,
-			ProCompatibilityServiceProvider::class => ProCompatibilityServiceProvider::class,
-			BlocksServiceProvider::class           => BlocksServiceProvider::class,
+			UpdaterServiceProvider::class             => UpdaterServiceProvider::class,
+			DeactivationServiceProvider::class        => DeactivationServiceProvider::class,
+			SettingsServiceProvider::class            => SettingsServiceProvider::class,
+			ProCompatibilityServiceProvider::class    => ProCompatibilityServiceProvider::class,
+			BlocksServiceProvider::class              => BlocksServiceProvider::class,
+			AdditionalAdminMenuServiceProvider::class => AdditionalAdminMenuServiceProvider::class,
 		);
 	}
 
