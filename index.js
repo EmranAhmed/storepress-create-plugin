@@ -114,7 +114,7 @@ module.exports = {
     },
     license: 'GPL-2.0-or-later',
     customScripts: {
-      "wp-plugin-check": "(node -e \"process.exit(require('fs').existsSync('wp-plugin-check') ? 1 : 0)\" && npx gitget WordPress/plugin-check/phpcs-sniffs wp-plugin-check/plugin-check/phpcs-sniffs) || echo \"> Skipping wp-plugin-check download\"",
+      "wp-plugin-check": "node -e \"require('fs').existsSync('wp-plugin-check') || require('child_process').execSync('npx -y gitget WordPress/plugin-check/phpcs-sniffs wp-plugin-check/plugin-check/phpcs-sniffs',{stdio:'inherit'})\"",
       'clean-composer': 'rimraf vendor',
       "postinstall": "npm run wp-plugin-check && npm run packages-install:all && git init -q && rimraf .husky && npm run clean-composer && composer install && npx husky init && echo \"npx lint-staged\" > .husky/pre-commit",
       'stan:php': 'composer run phpstan',
@@ -275,6 +275,9 @@ module.exports = {
 
       return {
         ...view,
+
+        //folderName: view.folderName.replace( /\$slug/g, view.slug ).replace( /\$namespace/g, view.namespace ),
+
         todayDate: todayDate,
         constantNamespace: constantNamespace,
         kebabNamespace: kebabNamespace,
