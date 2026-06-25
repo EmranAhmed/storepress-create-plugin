@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+'use strict';
 /* eslint-disable no-console */
 /**
  * External dependencies
@@ -7,15 +8,11 @@ const fs = require('fs')
 const spawn = require('cross-spawn')
 
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
 const {
 	getArgFromCLI,
 } = require('@wordpress/scripts/utils')
-
-/**
- * Constants
- */
 
 const PACKAGES_PREFIX = ['@storepress/']
 const COMPOSER_PACKAGES_PREFIX = [ 'storepress/' ];

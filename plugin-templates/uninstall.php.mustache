@@ -1,23 +1,18 @@
 <?php
 	/**
-	 * Uninstall Plugin
+	 * Uninstall Plugin File.
 	 *
 	 * Deletes all plugin settings.
 	 *
 	 * @package    {{namespacePascalCase}}\{{slugPascalCase}}
 	 * @since      {{version}}
+	 * @version    {{version}}
 	 */
+
+	declare( strict_types=1 );
 
 	namespace {{namespacePascalCase}}\{{slugPascalCase}};
 
-	/**
-	 * This file describes all uninstall logic.
-	 */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+	defined( 'ABSPATH' ) || die( 'Keep Silent' );
 
-	// Exit if accessed directly.
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-	exit;
-}
+	defined( 'WP_UNINSTALL_PLUGIN' ) || die( 'Keep Silent' );

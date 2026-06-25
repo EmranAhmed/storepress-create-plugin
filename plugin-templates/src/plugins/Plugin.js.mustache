@@ -1,87 +1,91 @@
 /**
  * External dependencies
  */
-import { getOptionsFromAttribute, triggerEvent } from '@storepress/utils'
+import { getOptionsFromAttribute, triggerEvent } from '@storepress/utils';
 
-export function Plugin (element, options) {
-// Default Settings
-  const DEFAULTS = {}
+export function Plugin( element, options ) {
+	// Default Settings
+	const DEFAULTS = {};
 
-  const PRIVATE = {}
+	const PRIVATE = {};
 
-// Collecting settings from html attribute
-  const ATTRIBUTE = 'plugin-settings' // html data-plugin-settings
+	// Collecting settings from html attribute
+	const ATTRIBUTE = 'plugin-settings'; // html data-plugin-settings
 
-  const CLASSES = {
-    NEW: 'new-class',
-  }
+	const CLASSES = {
+		NEW: 'new-class',
+	};
 
-  const noop = () => () => {}
+	const noop = () => () => {};
 
-  const getElementComputedStyle = (cssProperty) => {
-    return window.getComputedStyle(this.$element).getPropertyValue(cssProperty)
-  }
+	const getElementComputedStyle = ( cssProperty ) => {
+		return window
+			.getComputedStyle( this.$element )
+			.getPropertyValue( cssProperty );
+	};
 
-  const getComputedStyle = ($element, property) => {
-    return window.getComputedStyle($element).getPropertyValue(property)
-  }
+	const getComputedStyle = ( $element, property ) => {
+		return window.getComputedStyle( $element ).getPropertyValue( property );
+	};
 
-  const initial = () => {
-    console.log(this.settings)
-    triggerEvent(this.$element, 'afterInit', {})
-  }
+	const initial = () => {
+		console.log( this.settings );
+		triggerEvent( this.$element, 'afterInit', {} );
+	};
 
-  const addClasses = () => {
-    this.$element.classList.add(CLASSES.NEW)
-  }
+	const addClasses = () => {
+		this.$element.classList.add( CLASSES.NEW );
+	};
 
-  const addEvents = () => {
+	const addEvents = () => {
+		this.$element.addEventListener(
+			'click',
+			( e ) => {
+				console.log( e.target.getAttribute( 'class' ) );
+			},
+			{ signal: this.signal, passive: true }
+		);
+	};
 
-    this.$element.addEventListener('click', (e) => {
+	const removeEvents = () => {
+		this.controller.abort( 'Reset' );
+	};
 
-      console.log(e.target.getAttribute('class'))
+	const removeClasses = () => {
+		this.$element.classList.remove( CLASSES.NEW );
+	};
 
-    }, { signal: this.signal, passive: true })
+	const reset = () => {
+		removeClasses();
+		removeEvents();
+	};
 
-  }
+	// Expose reset to public.
+	const expose = () => ( {
+		reset,
+	} );
 
-  const removeEvents = () => {
+	// Do what you need and return expose fn.
+	const init = () => {
+		this.$element = element;
+		this.settings = {
+			...DEFAULTS,
+			...options,
+			...getOptionsFromAttribute( this.$element, ATTRIBUTE ),
+			...PRIVATE,
+		};
 
-    this.controller.abort('Reset')
-  }
+		this.controller = new AbortController();
+		this.signal = this.controller.signal;
 
-  const removeClasses = () => {
-    this.$element.classList.remove(CLASSES.NEW)
-  }
+		initial();
 
-  const reset = () => {
-    removeClasses()
-    removeEvents()
-  }
+		addClasses();
 
-// Expose reset to public.
-  const expose = () => ({
-    reset,
-  })
+		addEvents();
 
-// Do what you need and return expose fn.
-  const init = () => {
-    this.$element = element
-    this.settings = {
-      ...DEFAULTS, ...options, ...getOptionsFromAttribute(this.$element, ATTRIBUTE), ...PRIVATE,
-    }
+		return expose();
+	};
 
-    this.controller = new AbortController()
-    this.signal = this.controller.signal
-
-    initial()
-
-    addClasses()
-
-    addEvents()
-
-    return expose()
-  }
-
-  return init()
+	return init();
 }

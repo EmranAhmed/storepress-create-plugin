@@ -1,5 +1,5 @@
 /**
- * External dependencies
+ * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
@@ -18,20 +18,24 @@ import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
  * @return {Element} Element to render.
  */
 export default function Edit( { attributes, setAttributes, clientId } ) {
-
-	const { x } = attributes
-	const blockProps = useBlockProps({
+	const { x } = attributes;
+	const blockProps = useBlockProps( {
 		style: {
 			'--css-variable': `100%`,
 		},
-	})
+	} );
 
-	const innerBlockProps = useInnerBlocksProps()
+	const innerBlockProps = useInnerBlocksProps();
 
 	return (
-		<div {...blockProps}>
-			<h1>{__('{{title}} – static block edit.js!', '{{textdomain}}')}</h1>
-			<div {...innerBlockProps} />
+		<div { ...blockProps }>
+			<h1>
+				{ __(
+					'Example Plugin – static block edit.js!',
+					'{{textdomain}}'
+				) }
+			</h1>
+			<div { ...innerBlockProps } />
 		</div>
-	)
+	);
 }

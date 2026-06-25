@@ -1,6 +1,6 @@
 /**
-* External dependencies
-*/
+ * WordPress dependencies
+ */
 import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
@@ -16,20 +16,24 @@ import { __ } from '@wordpress/i18n';
  *
  * @return {Element} Element to render.
  */
-export default function save({ attributes }) {
-
-	const { x } = attributes
-	const blockProps = useBlockProps.save({
+export default function save( { attributes } ) {
+	const { x } = attributes;
+	const blockProps = useBlockProps.save( {
 		style: {
 			'--css-variable': `100%`,
 		},
-	})
-	const innerBlockProps = useInnerBlocksProps.save()
+	} );
+	const innerBlockProps = useInnerBlocksProps.save();
 
 	return (
-		<div {...blockProps}>
-			<h1>{__('{{title}} – static block save.js!', '{{textdomain}}')}</h1>
-			<div {...innerBlockProps} />
+		<div { ...blockProps }>
+			<h1>
+				{ __(
+					'Example Plugin – static block save.js!',
+					'{{textdomain}}'
+				) }
+			</h1>
+			<div { ...innerBlockProps } />
 		</div>
-	)
+	);
 }
