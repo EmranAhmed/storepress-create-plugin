@@ -19,13 +19,13 @@ When unsure whether a token is plugin-specific, **leave it alone and ask the use
 
 Use exactly these tag names. They match the conventions already in use in the user's templates — do not invent new spellings.
 
-| Mustache tag | Replaces | Example source value |
-|---|---|---|
-| `{{pascaleNamespace}}` | The **vendor/author** segment of the plugin's PHP namespace root | `StorePress` in `StorePress\Base` |
-| `{{slugPascalCase}}` | The **plugin** segment of the namespace (PascalCase of the slug) | `Base` in `StorePress\Base` |
-| `{{version}}` | Plugin version, used in `@since` / `@version` doc tags | `1.0.0` |
-| `{{textdomain}}` | The i18n text domain string (2nd arg of translation fns) | `storepress-base-plugin` |
-| `{{slug}}` | The plugin slug (kebab-case), when it appears as a literal | `storepress-base-plugin` / `base` |
+| Mustache tag | Replaces                                                           | Example source value |
+|---|--------------------------------------------------------------------|---|
+| `{{pascaleNamespace}}` | The **vendor/author** segment of the plugin's PHP namespace root   | `StorePress` in `StorePress\Base` |
+| `{{slugPascalCase}}` | The **plugin** segment of the namespace (PascalCase of the slug)   | `Base` in `StorePress\Base` |
+| `{{version}}` | Plugin version, used in `@since` / `@version` doc tags             | `1.0.0` |
+| `{{textdomain}}` | The i18n text domain string (2nd arg of translation fns)           | `storepress-base-plugin` |
+| `{{slug}}` | The plugin slug (kebab-case), when it appears as a literal         | `storepress-base-plugin` / `base` |
 
 > Note the spelling `{{pascaleNamespace}}` (with the trailing "e") — that is the spelling the user's existing templates use. Keep it consistent even though "Pascal" is the conventional spelling; consistency across the template set matters more than correctness of the word.
 

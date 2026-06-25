@@ -1,6 +1,6 @@
 <?php
 	/**
-	 * Service Container.
+	 * Service Providers Bootstrap.
 	 *
 	 * @package    {{pascaleNamespace}}/{{slugPascalCase}}
 	 * @since      {{version}}
@@ -9,18 +9,19 @@
 
 	declare( strict_types=1 );
 
-	namespace {{pascaleNamespace}}\{{slugPascalCase}}\Containers;
+	namespace {{pascaleNamespace}}\{{slugPascalCase}}\Core;
 
 	defined( 'ABSPATH' ) || die( 'Keep Silent' );
 
-	use StorePress\AdminUtils\ServiceContainers\ServiceContainer;
+	use StorePress\AdminUtils\ServiceProviders\ServiceProviderLoader;
 	use StorePress\AdminUtils\Traits\SingletonTrait;
 
 	/**
-	 * Plugin service container.
+	 * Registers and boots all plugin service providers.
 	 *
-	 * @name Container
+	 * @name Bootstrap
 	 */
-class Container extends ServiceContainer {
+class Bootstrap extends ServiceProviderLoader {
+
 	use SingletonTrait;
 }

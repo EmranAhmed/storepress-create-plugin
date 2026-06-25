@@ -14,14 +14,15 @@
 	defined( 'ABSPATH' ) || die( 'Keep Silent' );
 
 	use Automattic\WooCommerce\Utilities\FeaturesUtil;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Core\Bootstrap;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders\AdditionalAdminMenuServiceProvider;
 	use {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders\BlocksServiceProvider;
 	use {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders\ProCompatibilityServiceProvider;
-	use {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders\ServiceProviders;
 	use {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders\SettingsServiceProvider;
 	use {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders\DeactivationServiceProvider;
 	use {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders\UpdaterServiceProvider;
-	use {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders\AdditionalAdminMenuServiceProvider;
-	use {{pascaleNamespace}}\{{slugPascalCase}}\Containers\Container;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders\BlockSupportServiceProvider;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Integrations\Container;
 
 	/**
 	 * Class Plugin.
@@ -69,6 +70,7 @@ class Plugin {
 	public function includes(): void {
 
 		require_once __DIR__ . '/functions.php';
+
 		$vendor_path = untrailingslashit( plugin_dir_path( $this->get_plugin_file() ) ) . '/vendor';
 
 		if ( file_exists( $vendor_path . '/autoload_packages.php' ) ) {
@@ -111,7 +113,6 @@ class Plugin {
 	 * Get container.
 	 *
 	 * @return Container
-	 * @since {{version}}
 	 */
 	public function get_container(): Container {
 		return get_container();
@@ -124,12 +125,17 @@ class Plugin {
 	 * @since {{version}}
 	 */
 	public function get_service_providers(): array {
+
+		// We can override RegisterServiceProviders::get_providers() methods.
+		// to load all ServiceProvider to make Plugin.php file clean.
+
 		return array(
 			UpdaterServiceProvider::class             => UpdaterServiceProvider::class,
 			DeactivationServiceProvider::class        => DeactivationServiceProvider::class,
 			SettingsServiceProvider::class            => SettingsServiceProvider::class,
 			ProCompatibilityServiceProvider::class    => ProCompatibilityServiceProvider::class,
 			BlocksServiceProvider::class              => BlocksServiceProvider::class,
+			BlockSupportServiceProvider::class        => BlockSupportServiceProvider::class,
 			AdditionalAdminMenuServiceProvider::class => AdditionalAdminMenuServiceProvider::class,
 		);
 	}
@@ -137,12 +143,12 @@ class Plugin {
 	/**
 	 * Boots all registered service providers.
 	 *
-	 * @return ServiceProviders
+	 * @return Bootstrap
 	 * @since {{version}}
-	 * @see   ServiceProviders::instance()
+	 * @see   Bootstrap::instance()
 	 */
-	public function service_providers(): ServiceProviders {
-		return ServiceProviders::instance( $this->get_service_providers() );
+	public function service_providers(): Bootstrap {
+		return Bootstrap::instance( $this->get_service_providers() );
 	}
 
 	// =====================================================================

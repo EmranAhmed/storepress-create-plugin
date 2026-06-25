@@ -15,7 +15,8 @@
 
 	use StorePress\AdminUtils\Traits\HelperMethodsTrait;
 	use StorePress\AdminUtils\Traits\PluginCommonTrait;
-	use {{pascaleNamespace}}\{{slugPascalCase}}\Containers\Container;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Integrations\Container;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Services\BlockSupport;
 	use {{pascaleNamespace}}\{{slugPascalCase}}\Services\Settings;
 	use function {{pascaleNamespace}}\{{slugPascalCase}}\get_plugin_file;
 	use function {{pascaleNamespace}}\{{slugPascalCase}}\get_container;
@@ -65,6 +66,18 @@ trait PluginUtilityTrait {
 	 */
 	public function get_settings(): Settings {
 		return $this->get_container()->get( Settings::class );
+	}
+
+	/**
+	 * Returns Block Support.
+	 *
+	 * @param array<string, mixed> $attributes Block attributes array.
+	 *
+	 * @return BlockSupport
+	 * @since  {{version}}
+	 */
+	public function get_block_support( array $attributes ): BlockSupport {
+		return $this->get_container()->get( BlockSupport::class )( $attributes );
 	}
 
 	// =====================================================================

@@ -9,13 +9,12 @@
 
 	declare( strict_types=1 );
 
-	namespace {{pascaleNamespace}}\{{slugPascalCase}}\Integrations;
+	namespace {{pascaleNamespace}}\{{slugPascalCase}}\Adapters;
 
 	defined( 'ABSPATH' ) || die( 'Keep Silent' );
 
 	use StorePress\AdminUtils\Abstracts\AbstractUpdater;
 	use StorePress\AdminUtils\Traits\SingletonTrait;
-	use {{pascaleNamespace}}\{{slugPascalCase}}\Services\Settings;
 	use {{pascaleNamespace}}\{{slugPascalCase}}\Traits\PluginUtilityTrait;
 
 	/**
@@ -35,7 +34,7 @@ class Updater extends AbstractUpdater {
 	 * @since {{version}}
 	 */
 	public function license_key(): string {
-		return $this->get_container()->get( Settings::class )->get_option( 'license', '' );
+		return $this->get_settings()->get_option( 'license', '' );
 	}
 
 	/**
@@ -73,35 +72,19 @@ class Updater extends AbstractUpdater {
 			'check_update_link_text'        => esc_html__( 'Check Update', '{{textdomain}}' ),
 			'rollback_changelog_title'      => esc_html__( 'Changelog', '{{textdomain}}' ),
 			'rollback_action_running'       => esc_html__( 'Rolling back', '{{textdomain}}' ),
-			/* translators: %s: Plugin name. */
-			'rollback_action_button'        => sprintf( esc_html__( 'Rollback %s', '{{textdomain}}' ), $name ),
+			/* translators: %s: Plugin name. */ 'rollback_action_button' => sprintf( esc_html__( 'Rollback %s', '{{textdomain}}' ), $name ),
 			'rollback_cancel_button'        => esc_html__( 'Cancel', '{{textdomain}}' ),
 			'rollback_current_version'      => esc_html__( 'Current version', '{{textdomain}}' ),
-			/* translators: %s: Time elapsed (e.g. "2 hours"). */
-			'rollback_last_updated'         => esc_html__( 'Last updated %s ago.', '{{textdomain}}' ),
-			/* translators: %s: Plugin name. */
-			'rollback_view_changelog'       => sprintf( esc_html__( 'View Changelog for %s', '{{textdomain}}' ), $name ),
-			/* translators: %s: Plugin name. */
-			'rollback_page_title'           => sprintf( esc_html__( 'Rollback Plugin %s', '{{textdomain}}' ), $name ),
+			/* translators: %s: Time elapsed (e.g. "2 hours"). */ 'rollback_last_updated' => esc_html__( 'Last updated %s ago.', '{{textdomain}}' ),
+			/* translators: %s: Plugin name. */ 'rollback_view_changelog' => sprintf( esc_html__( 'View Changelog for %s', '{{textdomain}}' ), $name ),
+			/* translators: %s: Plugin name. */ 'rollback_page_title' => sprintf( esc_html__( 'Rollback Plugin %s', '{{textdomain}}' ), $name ),
 			'rollback_link_text'            => esc_html__( 'Rollback', '{{textdomain}}' ),
 			'rollback_failed'               => esc_html__( 'Rollback failed.', '{{textdomain}}' ),
-			/* translators: 1: Plugin name, 2: Version number. */
-			'rollback_success'              => esc_html__( 'Rollback success: %1$s rolled back to version %2$s.', '{{textdomain}}' ),
+			/* translators: 1: Plugin name, 2: Version number. */ 'rollback_success' => esc_html__( 'Rollback success: %1$s rolled back to version %2$s.', '{{textdomain}}' ),
 			'rollback_plugin_not_available' => esc_html__( 'Plugin is not available.', '{{textdomain}}' ),
 			'rollback_no_access'            => esc_html__( 'Sorry, you are not allowed to rollback plugins for this site.', '{{textdomain}}' ),
-			/* translators: %s: Plugin name. */
-			'rollback_not_available'        => esc_html__( 'Rollback is not available for plugin: %s', '{{textdomain}}' ),
+			/* translators: %s: Plugin name. */ 'rollback_not_available' => esc_html__( 'Rollback is not available for plugin: %s', '{{textdomain}}' ),
 			'rollback_no_target_version'    => esc_html__( 'Plugin version not selected.', '{{textdomain}}' ),
 		);
-	}
-
-	/**
-	 * Returns additional arguments sent to the update server.
-	 *
-	 * @return array<string, mixed>
-	 * @since {{version}}
-	 */
-	public function additional_request_args(): array {
-		return array( 'additional_key' => 'additional_value' );
 	}
 }

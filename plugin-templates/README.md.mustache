@@ -7,6 +7,27 @@ Test the plugin [in your browser](https://playground.wordpress.net/?mode=seamles
 
 Please check [Base Plugin](https://github.com/EmranAhmed/storepress-base-plugin/) to add `test` and others.
 
+
+## Summary table
+
+| Question                                                           | Yes → Directory     | ServiceProvider behavior    |
+|--------------------------------------------------------------------|---------------------|-----------------------------|
+| Extends an external package (functional)?                          | `Adapters/`         | — no own provider           |
+| Extends an external package (core infra like implement interface)? | `Integrations/`     | — no own provider           |
+| Has WordPress hooks that must fire on boot?                        | `Features/`         | `register()` **+** `boot()` |
+| No hooks — resolved on demand?                                     | `Services/`         | `register()` only           |
+| Is an individual service provider?                                 | `ServiceProviders/` | — is the provider           |
+| Orchestrates all service providers?                                | `Core/`             | — boots `ServiceProviders/` |
+| Shared utility across classes?                                     | `Traits/`           | — no provider               |
+
+
+**Why the difference matters:**
+
+- `boot()` is what triggers hook registration — it resolves the class from the container, which runs its constructor and fires `add_action`/`add_filter`. A Feature *must* be booted eagerly so its hooks are live before WordPress needs them.
+- A Service has no hooks. It does not need to be resolved at boot time — the container holds the binding and resolves it lazily the first time something calls `get_settings()` or `get_container()->get(Settings::class)`. Calling `boot()` on a hookless class is unnecessary work.
+
+
+
 ## Development
 
 - `npm i`

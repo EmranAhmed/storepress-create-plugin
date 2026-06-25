@@ -2,9 +2,9 @@
 	/**
 	 * Additional Admin Menu Service Provider.
 	 *
-	 * @package    {{pascaleNamespace}}/{{slugPascalCase}}
-	 * @since      {{version}}
-	 * @version    {{version}}
+	 * @package {{pascaleNamespace}}\{{slugPascalCase}}\ServiceProviders
+	 * @since   {{version}}
+	 * @version {{version}}
 	 */
 
 	declare( strict_types=1 );
@@ -15,13 +15,14 @@
 
 	use StorePress\AdminUtils\Abstracts\AbstractServiceProvider;
 	use StorePress\AdminUtils\Traits\SingletonTrait;
-	use {{pascaleNamespace}}\{{slugPascalCase}}\Integrations\AdditionalAdminMenu;
+	use {{pascaleNamespace}}\{{slugPascalCase}}\Adapters\AdditionalAdminMenu;
 	use {{pascaleNamespace}}\{{slugPascalCase}}\Traits\PluginUtilityTrait;
 
 	/**
 	 * Registers and boots the AdditionalAdminMenu service.
 	 *
 	 * @name AdditionalAdminMenuServiceProvider
+	 * @method static AdditionalAdminMenuServiceProvider instance()
 	 */
 class AdditionalAdminMenuServiceProvider extends AbstractServiceProvider {
 
