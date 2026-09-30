@@ -1,74 +1,76 @@
 <?php
-	/**
-	 * Utility Functions.
-	 *
-	 * @package      {{pascaleNamespace}}/{{slugPascalCase}}
-	 * @since        {{version}}
-	 * @version      {{version}}
-	 */
+/**
+ * Utility Functions.
+ *
+ * @package      {{pascaleNamespace}}/{{slugPascalCase}}
+ * @since        {{version}}
+ * @version      {{version}}
+ */
 
-	declare( strict_types=1 );
+declare(strict_types=1);
 
-	namespace {{pascaleNamespace}}\{{slugPascalCase}};
+namespace {{pascaleNamespace}}\{{slugPascalCase}};
 
-	defined( 'ABSPATH' ) || die( 'Keep Silent' );
+defined( 'ABSPATH' ) || die( 'Keep Silent' );
 
-	use {{pascaleNamespace}}\{{slugPascalCase}}\Integrations\Container;
-	use {{pascaleNamespace}}\{{slugPascalCase}}\Features\Blocks;
-	use {{pascaleNamespace}}\{{slugPascalCase}}\Services\Settings;
+use {{pascaleNamespace}}\{{slugPascalCase}}\Containers\Container;
+use {{pascaleNamespace}}\{{slugPascalCase}}\Features\Blocks;
+use {{pascaleNamespace}}\{{slugPascalCase}}\Services\Settings;
 
-	/**
-	 * Returns the plugin service container instance.
-	 *
-	 * @return Container
-	 * @since {{version}}
-	 */
+/**
+ * Returns the plugin service container instance.
+ *
+ * @return Container
+ * @since {{version}}
+ */
 function get_container(): Container {
 	return Container::instance();
 }
 
-	/**
-	 * Returns the Blocks service from the DI container.
-	 *
-	 * @return Blocks
-	 * @since  {{version}}
-	 * @see    get_container()
-	 */
+/**
+ * Returns the Blocks service from the DI container.
+ *
+ * @return Blocks
+ * @since  {{version}}
+ * @see    get_container()
+ */
 function get_blocks(): Blocks {
 	return get_container()->get( Blocks::class );
 }
 
-	/**
-	 * Returns the plugin main file path.
-	 *
-	 * @return string
-	 * @since {{version}}
-	 */
+/**
+ * Returns the plugin main file path.
+ *
+ * @return string
+ * @since {{version}}
+ */
 function get_plugin_file(): string {
 	return constant( '{{constantNamespace}}_{{constantSlug}}_PLUGIN_FILE' );
 }
 
-	/**
-	 * Returns the pro plugin main file path.
-	 *
-	 * @return string
-	 * @since {{version}}
-	 */
+/**
+ * Returns the pro plugin main file path.
+ *
+ * @return string
+ * @since {{version}}
+ */
 function get_pro_plugin_file(): string {
 
+	$pro_file = '{{slug}}-pro/{{slug}}-pro.php';
+
 	if ( defined( '{{constantNamespace}}_{{constantSlug}}_PLUGIN_PRO_FILE' ) ) {
-		return constant( '{{constantNamespace}}_{{constantSlug}}_PLUGIN_PRO_FILE' );
+		$constant_file = constant( '{{constantNamespace}}_{{constantSlug}}_PLUGIN_PRO_FILE' );
+		return is_string( $constant_file ) ? $constant_file : $pro_file;
 	}
 
-	return '{{slug}}-pro/{{slug}}-pro.php';
+	return $pro_file;
 }
 
-	/**
-	 * Get Settings.
-	 *
-	 * @return Settings
-	 * @since {{version}}
-	 */
+/**
+ * Get Settings.
+ *
+ * @return Settings
+ */
 function get_settings(): Settings {
 	return get_container()->get( Settings::class );
 }

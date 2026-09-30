@@ -9,7 +9,7 @@
 
 	declare( strict_types=1 );
 
-	namespace {{pascaleNamespace}}\{{slugPascalCase}}\Adapters;
+	namespace {{pascaleNamespace}}\{{slugPascalCase}}\Integrations;
 
 	defined( 'ABSPATH' ) || die( 'Keep Silent' );
 
@@ -34,7 +34,8 @@ class Updater extends AbstractUpdater {
 	 * @since {{version}}
 	 */
 	public function license_key(): string {
-		return $this->get_settings()->get_option( 'license', '' );
+		$license_key = $this->get_settings()->get_option( 'license' );
+		return is_string( $license_key ) ? $license_key : '';
 	}
 
 	/**
@@ -44,7 +45,7 @@ class Updater extends AbstractUpdater {
 	 * @since {{version}}
 	 */
 	public function product_id(): int {
-		return 1;
+		return 123450;
 	}
 
 	/**

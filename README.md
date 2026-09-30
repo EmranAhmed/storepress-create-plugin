@@ -24,7 +24,7 @@ npx @wp-now/wp-now start             # Start Wordpress environment
 For development on this tool itself, you can also install from a local directory.
 
 ```bash
-npx -y @wordpress/create-block@latest --template ./create-plugin example-extension-name && cd "$_" 
+npx -y @wordpress/create-block@latest --template ./storepress-create-plugin example-extension-name && cd "$_" 
 ```
 
 ### Add Tests

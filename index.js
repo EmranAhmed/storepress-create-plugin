@@ -8,7 +8,7 @@ const {join} = require('path')
  * underscores, spaces, and plus signs) with hyphens and lowercasing.
  *
  * @param {string} input - The string to convert.
- * @returns {string} The kebab-cased string (e.g. "my-plugin-name").
+ * @returns {string} The kebab-cased sßtring (e.g. "my-plugin-name").
  *
  * @example
  * kebabCase('My Plugin Name') // => 'my-plugin-name'
@@ -95,85 +95,86 @@ function pascalCase(input) {
  * }}
  */
 module.exports = {
-    defaultValues       : {
-        wpScripts          : false,
-        folderName         : 'src/static-block',
-        namespace          : 'storepress',
-        slug               : 'plugin',
-        version            : '0.0.1',
-        title              : 'StorePress Plugin',
-        description        : 'A StorePress Plugin',
-        author             : 'EmranAhmed',
-        dashicon           : 'pets',
-        category           : 'storepress',
-        attributes         : {
-            x : {
-                type    : 'number',
-                default : 100,
+    defaultValues: {
+        wpScripts: false,
+        folderName: 'src/static-block',
+        namespace: 'storepress',
+        slug: 'plugin',
+        version: '0.0.1',
+        title: 'StorePress Plugin',
+        description: 'A StorePress Plugin',
+        author: 'EmranAhmed',
+        dashicon: 'pets',
+        category: 'storepress',
+        attributes: {
+            x: {
+                type: 'number',
+                default: 100,
             },
         },
-        license            : 'GPL-2.0-or-later',
-        customScripts      : {
-            "wp-plugin-check" : "node -e \"require('fs').existsSync('wp-plugin-check') || require('child_process').execSync('npx -y gitget WordPress/plugin-check/phpcs-sniffs wp-plugin-check/plugin-check/phpcs-sniffs',{stdio:'inherit'})\"",
-            'clean-composer'  : 'rimraf vendor',
-            "postinstall"     : "npm run wp-plugin-check && npm run packages-install:all && git init -q && rimraf .husky && npm run clean-composer && composer install && npx husky && echo \"npx lint-staged\" > .husky/pre-commit",
+        license: 'GPL-2.0-or-later',
+        customScripts: {
+            "wp-plugin-check": "node -e \"require('fs').existsSync('wp-plugin-check') || require('child_process').execSync('npx -y gitget WordPress/plugin-check/phpcs-sniffs wp-plugin-check/plugin-check/phpcs-sniffs',{stdio:'inherit'})\"",
+            'clean-composer': 'rimraf vendor',
+            "postinstall": "npm run wp-plugin-check && npm run packages-install:all && git init -q && rimraf .husky && npm run clean-composer && composer install && npx husky && echo \"npx lint-staged\" > .husky/pre-commit",
 
-            'stan:php'        : 'composer run phpstan',
-            'stan:php:report' : 'composer run phpstan-report',
+            'stan:php': 'composer run phpstan',
+            'stan:php:report': 'composer run phpstan-report',
+            "stan:php:clear": "composer run phpstan-clear",
 
-            'lint:php:report' : 'composer run lint-report',
-            'lint:php'        : 'composer run lint',
-            'lint:php:fix'    : 'composer run format',
-            'format:php'      : 'composer run format',
+            'lint:php:report': 'composer run lint-report',
+            'lint:php': 'composer run lint',
+            'lint:php:fix': 'composer run format',
+            'format:php': 'composer run format',
 
-            'prebuild' : 'rimraf build',
-            'build'    : 'npm run start -- --no-watch && wp-scripts build --webpack-copy-php --experimental-modules',
+            'prebuild': 'rimraf build',
+            'build': 'npm run start -- --no-watch && wp-scripts build --webpack-copy-php --experimental-modules',
 
-            'check-engines'  : 'wp-scripts check-engines',
-            'check-licenses' : 'wp-scripts check-licenses',
+            'check-engines': 'wp-scripts check-engines',
+            'check-licenses': 'wp-scripts check-licenses',
 
-            'format'     : 'wp-scripts format ./src',
-            'format:all' : 'npm run format:php && npm run format:css && npm run format:js',
-            'format:js'  : 'wp-scripts format \'./src/**/*.js\'',
-            'format:css' : 'wp-scripts format \'./src/**/*.scss\'',
+            'format': 'wp-scripts format ./src',
+            'format:all': 'npm run format:php && npm run format:css && npm run format:js',
+            'format:js': 'wp-scripts format \'./src/**/*.js\'',
+            'format:css': 'wp-scripts format \'./src/**/*.scss\'',
 
-            'lint:css'        : 'wp-scripts lint-style \'./src/**/*.scss\'',
-            'lint:css:report' : 'npm run lint:css -- --output-file scss-report.txt',
-            'lint:css:fix'    : 'npm run lint:css -- --fix',
+            'lint:css': 'wp-scripts lint-style \'./src/**/*.scss\'',
+            'lint:css:report': 'npm run lint:css -- --output-file scss-report.txt',
+            'lint:css:fix': 'npm run lint:css -- --fix',
 
-            'lint:js'        : 'wp-scripts lint-js --format=pretty \'./src/**/*.js\'',
-            'lint:js:report' : 'npm run lint:js -- --format html --output-file lint-report.html',
-            'lint:js:fix'    : 'npm run lint:js -- --fix',
+            'lint:js': 'wp-scripts lint-js --format=pretty \'./src/**/*.js\'',
+            'lint:js:report': 'npm run lint:js -- --format html --output-file lint-report.html',
+            'lint:js:fix': 'npm run lint:js -- --fix',
 
-            'lint:md:docs'  : 'wp-scripts lint-md-docs',
-            'lint:pkg-json' : 'wp-scripts lint-pkg-json',
+            'lint:md:docs': 'wp-scripts lint-md-docs',
+            'lint:pkg-json': 'wp-scripts lint-pkg-json',
 
-            "packages-install:all"       : "node ./tools/packages-install.js",
-            "packages-update:storepress" : "node ./tools/packages-update.js",
-            'packages-update'            : 'wp-scripts packages-update && npm run packages-update:storepress && composer update && composer dump-autoload',
+            "packages-install:all": "node ./tools/packages-install.js",
+            "packages-update:storepress": "node ./tools/packages-update.js",
+            'packages-update': 'wp-scripts packages-update && npm run packages-update:storepress && composer update && composer dump-autoload',
 
-            'prepackage'  : 'rimraf languages ${npm_package_name}.zip && npm run language && npm run build && npm run clean-composer && composer install --no-dev --optimize-autoloader',
-            'package'     : 'node ./tools/package.js',
-            'postpackage' : 'npm run clean-composer && composer install',
+            'prepackage': 'rimraf languages ${npm_package_name}.zip && npm run language && npm run build && npm run clean-composer && composer install --no-dev --optimize-autoloader',
+            'package': 'node ./tools/package.js',
+            'postpackage': 'npm run clean-composer && composer install',
 
-            'plugin-zip' : 'npm run package -- --zip',
+            'plugin-zip': 'npm run package -- --zip',
 
-            'test:e2e'  : 'wp-scripts test-e2e',
-            'test:unit' : 'wp-scripts test-unit-js --config jest.config.js',
+            'test:e2e': 'wp-scripts test-e2e',
+            'test:unit': 'wp-scripts test-unit-js --config jest.config.js',
 
-            'start' : 'rimraf build && wp-scripts start --webpack-copy-php --experimental-modules',
+            'start': 'rimraf build && wp-scripts start --webpack-copy-php --experimental-modules',
 
-            'language'           : 'npm run language:make-pot && npm run language:make-json',
-            "language:make-pot"  : "WP_CLI_PHP_ARGS='-d memory_limit=2048M' ./vendor/bin/wp i18n make-pot . languages/${npm_package_name}.pot --slug=$npm_package_name --domain=$npm_package_name --exclude=tools,node_modules,vendor,languages --package-name=\"StorePress Plugin\"",
-            "language:make-json" : "WP_CLI_PHP_ARGS='-d memory_limit=2048M' ./vendor/bin/wp i18n make-json languages --pretty-print",
+            'language': 'npm run language:make-pot && npm run language:make-json',
+            "language:make-pot": "WP_CLI_PHP_ARGS='-d memory_limit=2048M' ./vendor/bin/wp i18n make-pot . languages/${npm_package_name}.pot --slug=$npm_package_name --domain=$npm_package_name --exclude=tools,node_modules,vendor,languages --package-name=\"StorePress Plugin\"",
+            "language:make-json": "WP_CLI_PHP_ARGS='-d memory_limit=2048M' ./vendor/bin/wp i18n make-json languages --pretty-print",
 
-            'create-dynamic-block'        : 'npx @wordpress/create-block@latest --namespace storepress --variant dynamic --no-plugin',
-            'create-static-block'         : 'npx @wordpress/create-block@latest --namespace storepress --no-plugin',
-            'create-interactive-block'    : 'npx @wordpress/create-block@latest --template @wordpress/create-block-interactive-template --namespace storepress --no-plugin',
-            'create-woo-extension'        : 'npx @wordpress/create-block@latest --template @woocommerce/create-woo-extension --namespace storepress',
-            'create-product-editor-block' : 'npx @wordpress/create-block@latest --template @woocommerce/create-product-editor-block --namespace storepress',
+            'create-dynamic-block': 'npx @wordpress/create-block@latest --namespace storepress --variant dynamic --no-plugin',
+            'create-static-block': 'npx @wordpress/create-block@latest --namespace storepress --no-plugin',
+            'create-interactive-block': 'npx @wordpress/create-block@latest --template @wordpress/create-block-interactive-template --namespace storepress --no-plugin',
+            'create-woo-extension': 'npx @wordpress/create-block@latest --template @woocommerce/create-woo-extension --namespace storepress',
+            'create-product-editor-block': 'npx @wordpress/create-block@latest --template @woocommerce/create-product-editor-block --namespace storepress',
         },
-        npmDependencies    : [
+        npmDependencies: [
             '@wordpress/interactivity',
             '@storepress/components',
             '@storepress/icons',
@@ -182,7 +183,7 @@ module.exports = {
             '@wordpress/icons',
             'clsx',
         ],
-        npmDevDependencies : [
+        npmDevDependencies: [
             '@wordpress/eslint-plugin',
             '@wordpress/babel-preset-default',
             '@wordpress/scripts',
@@ -200,24 +201,24 @@ module.exports = {
             'prettier'
             //'prettier@https://github.com/Automattic/wp-prettier/archive/refs/heads/wp-prettier-2.8.5.zip'
         ],
-        customPackageJSON  : {
-            "private"    : true,
-            "license"    : "GPL-2.0-or-later",
-            "keywords"   : [
+        customPackageJSON: {
+            "private": true,
+            "license": "GPL-2.0-or-later",
+            "keywords": [
                 "wordpress",
                 "gutenberg",
                 "block",
                 "storepress"
             ],
-            "homepage"   : "https://github.com/USERNAME/REPO",
-            "repository" : {
-                "type" : "git",
-                "url"  : "https://github.com/USERNAME/REPO"
+            "homepage": "https://github.com/USERNAME/REPO",
+            "repository": {
+                "type": "git",
+                "url": "https://github.com/USERNAME/REPO"
             },
-            "bugs"       : {
-                "url" : "https://github.com/USERNAME/REPO/issues"
+            "bugs": {
+                "url": "https://github.com/USERNAME/REPO/issues"
             },
-            'files'      : [
+            'files': [
                 'vendor/**',
                 'admin/**',
                 'public/**',
@@ -258,41 +259,41 @@ module.exports = {
          *   - `{string} GITHUB_CHANGELOG_CONTENT` - GitHub Actions expression for changelog content.
          *   - `{string} GITHUB_TOKEN`             - GitHub Actions expression for the GitHub token.
          */
-        transformer : (view) => {
-            const todayDate         = new Date().toJSON().slice(0, 10)
-            const pascaleNamespace  = pascalCase(pascalStorePress(view.namespace))
+        transformer: (view) => {
+            const todayDate = new Date().toJSON().slice(0, 10)
+            const pascaleNamespace = pascalCase(pascalStorePress(view.namespace))
             const constantNamespace = constantCase(view.namespace)
-            const kebabNamespace    = kebabCase(view.namespace)
-            const constantSlug      = constantCase(view.slug)
-            const kebabSlug         = kebabCase(view.slug)
-            const pascaleSlug       = pascalCase(pascalStorePress(view.slug))
-            const snakeNamespace    = snakeCase(view.namespace)
-            const snakeSlug         = snakeCase(view.slug)
+            const kebabNamespace = kebabCase(view.namespace)
+            const constantSlug = constantCase(view.slug)
+            const kebabSlug = kebabCase(view.slug)
+            const pascaleSlug = pascalCase(pascalStorePress(view.slug))
+            const snakeNamespace = snakeCase(view.namespace)
+            const snakeSlug = snakeCase(view.slug)
 
             return {
                 ...view,
 
                 //folderName: view.folderName.replace( /\$slug/g, view.slug ).replace( /\$namespace/g, view.namespace ),
 
-                todayDate         : todayDate,
-                constantNamespace : constantNamespace,
-                kebabNamespace    : kebabNamespace,
-                pascaleNamespace  : pascaleNamespace,
-                snakeNamespace    : snakeNamespace,
+                todayDate: todayDate,
+                constantNamespace: constantNamespace,
+                kebabNamespace: kebabNamespace,
+                pascaleNamespace: pascaleNamespace,
+                snakeNamespace: snakeNamespace,
 
-                constantSlug : constantSlug,
-                kebabSlug    : kebabSlug,
-                pascaleSlug  : pascaleSlug,
-                snakeSlug    : snakeSlug,
+                constantSlug: constantSlug,
+                kebabSlug: kebabSlug,
+                pascaleSlug: pascaleSlug,
+                snakeSlug: snakeSlug,
 
-                GITHUB_REPOSITORY_NAME   : "${{ github.event.repository.name }}",
-                GITHUB_RELEASE_NAME      : "${{ env.RELEASE_NAME }}",
-                GITHUB_RELEASE_TAG       : "${{ env.RELEASE_TAG }}",
-                GITHUB_CHANGELOG_CONTENT : "${{ steps.changelog.outputs.changelog }}",
-                GITHUB_TOKEN             : "${{ secrets.GITHUB_TOKEN }}",
+                GITHUB_REPOSITORY_NAME: "${{ github.event.repository.name }}",
+                GITHUB_RELEASE_NAME: "${{ env.RELEASE_NAME }}",
+                GITHUB_RELEASE_TAG: "${{ env.RELEASE_TAG }}",
+                GITHUB_CHANGELOG_CONTENT: "${{ steps.changelog.outputs.changelog }}",
+                GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
             }
         },
     },
-    pluginTemplatesPath : join(__dirname, 'plugin-templates'),
-    blockTemplatesPath  : join(__dirname, 'block-templates'),
+    pluginTemplatesPath: join(__dirname, 'plugin-templates'),
+    blockTemplatesPath: join(__dirname, 'block-templates'),
 }
