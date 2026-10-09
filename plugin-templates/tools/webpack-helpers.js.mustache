@@ -99,6 +99,7 @@ function getRootFile (fileName) {
 
 function getWebPackAlias() {
 	return {
+        '@': fromProjectRoot( getProjectSourcePath() ), // Add "@/*": [ "src/*" ] in jsconfig.json, use case "import x from "@/utils""
 		'@block-support': getFile('utils/BlockSupport'), // Add "@block-support": [ "src/utils/BlockSupport" ] on jsconfig.json
 		'@plugins': getFile('plugins/Plugin'), // Add "@plugins": [ "src/plugins/Plugin" ] on jsconfig.json
 		//'@storepress/icons': getFile('packages/icons'),
